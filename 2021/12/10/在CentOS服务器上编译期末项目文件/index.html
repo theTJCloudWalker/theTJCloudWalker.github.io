@@ -1,352 +1,76 @@
-
-<!DOCTYPE html>
-<html lang="zh-CN">
-    
+<!DOCTYPE HTML>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="行走就是圆梦，回去亦是前行">
-    <title>在CentOS服务器上编译期末项目文件 - 行走就是圆梦，回去亦是前行</title>
-    <meta name="author" content="TJCloudWalker">
-    
-    
-    
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"TJCloudWalker","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"在CentOS服务器上编译期末项目文件事前准备\n账户以及密码；\nPutty、terminal、shell三选一；\nWinSCP；\nvscode以及插件C/C++ Project Generator(推荐)\n\n操作步骤登录服务器\n在terminal和shell里登陆时使用命令：\n\n12ssh admin@150.158.80.33# admin是要登陆的用户名\n\n\n按照提示输入密码即可；\n\n登录示例\n123456 C:\\Users\\Li Hua&gt;ssh root@150.158.80.33root@150.158.80.33&#x27;s password:Activate the web console with: systemctl enable --now cockpit.socketLast login: Fri Dec 17 11:17:33 2021 from 111.187.8.131[oh-my-zsh] Random theme &#x27;gnzh&#x27; loaded\n\n\n使用putty和WinSCP登陆时，host为150.158.80.33；\n\n上传项目到服务器\n借助WinSCP；\n\n编译项目编译方法千千万，这里给出一种：\n\n借助vscode的C/C++ Project Generator新建项目，将原项目重构；\n其结构如下\n12345678910111213141516171819root@VM-16-17-centos:~/code$ cd Problem1root@VM-16-17-centos:~/code/Problem1$ tree.├── include│   ├── Examinee.h│   └── SinglyLinkedList.h├── lib├── Makefile├── output│   ├── data.txt│   └── main└── src    ├── main.cpp    └── main.o4 directories, 7 files\n\n简单来说就是在新建的空项目中，删除自动生成的main.cpp，将头文件放入include文件夹，cpp文件放入src文件夹；\n\n将用C/C++ Project Generator生成的项目文件夹上传到服务器；\n这一步使用WinSCP；\n\n进入项目文件夹；\n进入文件夹使用cd命令：\n12345678910root@VM-16-17-centos:~/code$ ls # ls命令用于查看该目录下可见的文件以及文件夹coding  Graph  Heap  leetcode  Problem1  Problem10  Problem2  Problem3  Problem4  Problem5  Problem6  Problem7  Problem8  Problem9  test  Treeroot@VM-16-17-centos:~/code$ cd Problem1 # 进入Problem1文件夹root@VM-16-17-centos:~/code/Problem1$ ls # 查看Problem1文件夹的可见内容include  lib  Makefile  output  src\ngcc环境和cmake环境已经安装，使用以下命令查看:\n12gcc -vcmake --version\n借助C/C++ Project Generator给出的makefile文件，可以使用make命令编译项目：\n1make\n\n示例：\n1234root@VM-16-17-centos:~/code/Problem1[130] $ make                                                                                                   g++ -std=c++11 -Wall -Wextra -g -Iinclude -o output/main src/main.o  -LlibExecuting all complete! # 看到此句说明编译成功\n\n生成的.o可执行文件在output文件夹下，先进入该目录，然后执行：\n12345678910111213141516171819root@VM-16-17-centos:~/code/Problem1$ cd outputroot@VM-16-17-centos:~/code/Problem1/output$ lsdata.txt  mainroot@VM-16-17-centos:~/code/Problem1/output$ ./mainsh: chcp: command not found#1 1    stu1      女       20   软件设计师#2 2    stu2      男       21   软件开发师#3 3    stu3      男       20   软件设计师#4 4    stu4      女       21   软件设计师#5 5    stu5      男       25   软件开发师#6 6    stu6      男       24   软件设计师请选择您要进行的操作（1为插入，2为删除，3为查找，4为修改，5为统计，0为取消操作）.\n\n使用WinSCP将生成的可执行文件下载到本地即可\n\n\n","dateCreated":"2021-12-10T10:40:28+08:00","dateModified":"2021-12-17T04:33:20+08:00","datePublished":"2021-12-10T10:40:28+08:00","description":"","headline":"在CentOS服务器上编译期末项目文件","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://tjcloudwalker.top/2021/12/10/%E5%9C%A8CentOS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%BC%96%E8%AF%91%E6%9C%9F%E6%9C%AB%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6/"},"publisher":{"@type":"Organization","name":"TJCloudWalker","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"http://tjcloudwalker.top/2021/12/10/%E5%9C%A8CentOS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%BC%96%E8%AF%91%E6%9C%9F%E6%9C%AB%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6/"}</script>
-    <meta name="description" content="在CentOS服务器上编译期末项目文件事前准备 账户以及密码； Putty、terminal、shell三选一； WinSCP； vscode以及插件C&#x2F;C++ Project Generator(推荐)  操作步骤登录服务器 在terminal和shell里登陆时使用命令：  12ssh admin@150.158.80.33# admin是要登陆的用户名   按照提示输入密码即可；  登录示例">
-<meta property="og:type" content="blog">
-<meta property="og:title" content="在CentOS服务器上编译期末项目文件">
-<meta property="og:url" content="http://tjcloudwalker.top/2021/12/10/%E5%9C%A8CentOS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%BC%96%E8%AF%91%E6%9C%9F%E6%9C%AB%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6/index.html">
-<meta property="og:site_name" content="行走就是圆梦，回去亦是前行">
-<meta property="og:description" content="在CentOS服务器上编译期末项目文件事前准备 账户以及密码； Putty、terminal、shell三选一； WinSCP； vscode以及插件C&#x2F;C++ Project Generator(推荐)  操作步骤登录服务器 在terminal和shell里登陆时使用命令：  12ssh admin@150.158.80.33# admin是要登陆的用户名   按照提示输入密码即可；  登录示例">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-12-10T02:40:28.000Z">
-<meta property="article:modified_time" content="2021-12-16T20:33:20.154Z">
-<meta property="article:author" content="TJCloudWalker">
-<meta name="twitter:card" content="summary">
-    
-    
-        
-    
-    
-    
-    
-    
-    <!--STYLES-->
-    
-<link rel="stylesheet" href="/assets/css/all.css">
+  <meta charset="utf-8">
+  
+  <title>在CentOS服务器上编译期末项目文件 › 行走就是圆梦，回去亦是前行</title>
+  <meta name="author" content="TJCloudWalker">
+  
+  <meta name="description" content="在CentOS服务器上编译期末项目文件事前准备
+账户以及密码；
+Putty、terminal、shell三选一；
+WinSCP；
+vscode以及插件C/C++ Project Generator(推荐)
 
-    
-<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
+操作步骤登录服务器
+在terminal和shell里登陆时使用命令：
 
-    
-<link rel="stylesheet" href="/assets/css/thumbs.css">
+12ssh admi">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    
-<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+  <meta property="og:title" content="在CentOS服务器上编译期末项目文件"/>
+  <meta property="og:site_name" content="行走就是圆梦，回去亦是前行"/>
 
-    <!--STYLES END-->
-    
+  
+    <meta property="og:image" content=""/>
+  
 
-    
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="行走就是圆梦，回去亦是前行" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
-    
-        
-    
-</head>
-
-    <body>
-        <div id="blog">
-            <!-- Define author's picture -->
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
-    
-
-<header id="header" data-behavior="4">
-    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
-    <div class="header-title">
-        <a
-            class="header-title-link"
-            href="/"
-            aria-label=""
-        >
-            行走就是圆梦，回去亦是前行
-        </a>
-    </div>
-    
-        
-            <a
-                class="header-right-picture "
-                href="#about"
-                aria-label="Öffne den Link: /#about"
-            >
-        
-        
-        </a>
-    
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">行走就是圆梦，回去亦是前行</a></h1>
+  <h2><a href="/"></a></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/about">About</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
 </header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">在CentOS服务器上编译期末项目文件</h1>
+  
 
-            <!-- Define author's picture -->
-
-
-<nav id="sidebar" data-behavior="4">
-    <div class="sidebar-container">
-        
-        
-            <ul class="sidebar-buttons">
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="/"
-                            
-                            rel="noopener"
-                            title="Home"
-                        >
-                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Home</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="/all-categories"
-                            
-                            rel="noopener"
-                            title="Kategorien"
-                        >
-                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Kategorien</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="/all-tags"
-                            
-                            rel="noopener"
-                            title="Tags"
-                        >
-                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Tags</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="/all-archives"
-                            
-                            rel="noopener"
-                            title="Archiv"
-                        >
-                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Archiv</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link open-algolia-search"
-                            href="#search"
-                            
-                            rel="noopener"
-                            title="Suche"
-                        >
-                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Suche</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="#about"
-                            
-                            rel="noopener"
-                            title="Über"
-                        >
-                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Über</span>
-                    </a>
-            </li>
-            
-        </ul>
-        
-            <ul class="sidebar-buttons">
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="https://github.com/"
-                            
-                                target="_blank"
-                            
-                            rel="noopener"
-                            title="GitHub"
-                        >
-                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">GitHub</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="http://stackoverflow.com/users"
-                            
-                                target="_blank"
-                            
-                            rel="noopener"
-                            title="Stack Overflow"
-                        >
-                        <i class="sidebar-button-icon fab fa-stack-overflow" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Stack Overflow</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="https://twitter.com/"
-                            
-                                target="_blank"
-                            
-                            rel="noopener"
-                            title="Twitter"
-                        >
-                        <i class="sidebar-button-icon fab fa-twitter" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Twitter</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="https://facebook.com/"
-                            
-                                target="_blank"
-                            
-                            rel="noopener"
-                            title="Facebook"
-                        >
-                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Facebook</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="https://plus.google.com/"
-                            
-                                target="_blank"
-                            
-                            rel="noopener"
-                            title="Google Plus"
-                        >
-                        <i class="sidebar-button-icon fab fa-google-plus" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Google Plus</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="https://www.linkedin.com/profile/"
-                            
-                                target="_blank"
-                            
-                            rel="noopener"
-                            title="LinkedIn"
-                        >
-                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">LinkedIn</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="/mailto"
-                            
-                            rel="noopener"
-                            title="E-Mail"
-                        >
-                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">E-Mail</span>
-                    </a>
-            </li>
-            
-        </ul>
-        
-            <ul class="sidebar-buttons">
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="/atom.xml"
-                            
-                            rel="noopener"
-                            title="RSS"
-                        >
-                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">RSS</span>
-                    </a>
-            </li>
-            
-        </ul>
-        
-    </div>
-</nav>
-
-            
-            <div id="main" data-behavior="4"
-                 class="
-                        hasCoverMetaIn
-                        ">
-                
-<article class="post">
-    
-    
-        <div class="post-header main-content-wrap text-left">
-    
-        <h1 class="post-title">
-            在CentOS服务器上编译期末项目文件
-        </h1>
-    
-    
-        <div class="post-meta">
-    <time datetime="2021-12-10T10:40:28+08:00">
-	
-		    10 12月 2021
-    	
-    </time>
-    
-</div>
-
-    
-</div>
-
-    
-    <div class="post-content markdown">
-        <div class="main-content-wrap">
-            <h1 id="在CentOS服务器上编译期末项目文件"><a href="#在CentOS服务器上编译期末项目文件" class="headerlink" title="在CentOS服务器上编译期末项目文件"></a>在CentOS服务器上编译期末项目文件</h1><h2 id="事前准备"><a href="#事前准备" class="headerlink" title="事前准备"></a>事前准备</h2><ul>
+      
+        <time datetime="2021-12-10T02:40:28.000Z">2021-12-10</time>
+      
+    </header>
+    <div class="entry">
+      
+        <h1 id="在CentOS服务器上编译期末项目文件"><a href="#在CentOS服务器上编译期末项目文件" class="headerlink" title="在CentOS服务器上编译期末项目文件"></a>在CentOS服务器上编译期末项目文件</h1><h2 id="事前准备"><a href="#事前准备" class="headerlink" title="事前准备"></a>事前准备</h2><ul>
 <li>账户以及密码；</li>
 <li>Putty、terminal、shell三选一；</li>
 <li>WinSCP；</li>
@@ -398,320 +122,88 @@
 </li>
 </ul>
 
-            
-
-
-        </div>
+      
     </div>
-    <div id="post-footer" class="post-footer main-content-wrap">
+      
+      <footer>
         
         
-            <div class="post-actions-wrap">
-    <nav>
-        <ul class="post-actions post-action-nav">
-            <li class="post-action">
-                
-                    <a
-                        class="post-action-btn btn btn--disabled"
-                        aria-hidden="true"
-                    >
-                        
-                        <i class="fa fa-angle-left" aria-hidden="true"></i>
-                        <span class="hide-xs hide-sm text-small icon-ml">FRÜHER</span>
-                    </a>
-            </li>
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/12/10/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99makefile%E8%AF%A6%E8%A7%A3/"
-                    data-tooltip="如何编写makefile详解"
-                    aria-label="NÄCHSTER: 如何编写makefile详解"
-                >
-                    
-                        <span class="hide-xs hide-sm text-small icon-mr">NÄCHSTER</span>
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </a>
-            </li>
-        </ul>
-    </nav>
-    <ul class="post-actions post-action-share">
-        <li class="post-action hide-lg hide-md hide-sm">
-            <a
-                class="post-action-btn btn btn--default btn-open-shareoptions"
-                href="#btn-open-shareoptions"
-                aria-label="Diesen Beitrag teilen"
-            >
-                <i class="fa fa-share-alt" aria-hidden="true"></i>
-            </a>
-        </li>
         
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://tjcloudwalker.top/2021/12/10/%E5%9C%A8CentOS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%BC%96%E8%AF%91%E6%9C%9F%E6%9C%AB%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6/"
-                    title="Teilen auf Facebook"
-                    aria-label="Teilen auf Facebook"
-                >
-                    <i class="fab fa-facebook" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=http://tjcloudwalker.top/2021/12/10/%E5%9C%A8CentOS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%BC%96%E8%AF%91%E6%9C%9F%E6%9C%AB%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6/"
-                    title="Teilen auf Twitter"
-                    aria-label="Teilen auf Twitter"
-                >
-                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=http://tjcloudwalker.top/2021/12/10/%E5%9C%A8CentOS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%BC%96%E8%AF%91%E6%9C%9F%E6%9C%AB%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6/"
-                    title="Teilen auf Google Plus"
-                    aria-label="Teilen auf Google Plus"
-                >
-                    <i class="fab fa-google-plus" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-        
-            
-        
-        <li class="post-action">
-            
-                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
-            
-                <i class="fa fa-list" aria-hidden="true"></i>
-            </a>
-        </li>
-    </ul>
-</div>
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
 
-
-        
-        
-            
-        
-    </div>
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
 </article>
 
 
+<section id="comment">
+  
+</section>
 
-                <footer id="footer" class="main-content-wrap">
-    <span class="copyrights">
-        Copyrights &copy; 2022 TJCloudWalker. All Rights Reserved.
-    </span>
-</footer>
 
-            </div>
-            
-                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
-                    <div class="post-actions-wrap">
-    <nav>
-        <ul class="post-actions post-action-nav">
-            <li class="post-action">
-                
-                    <a
-                        class="post-action-btn btn btn--disabled"
-                        aria-hidden="true"
-                    >
-                        
-                        <i class="fa fa-angle-left" aria-hidden="true"></i>
-                        <span class="hide-xs hide-sm text-small icon-ml">FRÜHER</span>
-                    </a>
-            </li>
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/12/10/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99makefile%E8%AF%A6%E8%A7%A3/"
-                    data-tooltip="如何编写makefile详解"
-                    aria-label="NÄCHSTER: 如何编写makefile详解"
-                >
-                    
-                        <span class="hide-xs hide-sm text-small icon-mr">NÄCHSTER</span>
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </a>
-            </li>
-        </ul>
-    </nav>
-    <ul class="post-actions post-action-share">
-        <li class="post-action hide-lg hide-md hide-sm">
-            <a
-                class="post-action-btn btn btn--default btn-open-shareoptions"
-                href="#btn-open-shareoptions"
-                aria-label="Diesen Beitrag teilen"
-            >
-                <i class="fa fa-share-alt" aria-hidden="true"></i>
-            </a>
-        </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://tjcloudwalker.top/2021/12/10/%E5%9C%A8CentOS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%BC%96%E8%AF%91%E6%9C%9F%E6%9C%AB%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6/"
-                    title="Teilen auf Facebook"
-                    aria-label="Teilen auf Facebook"
-                >
-                    <i class="fab fa-facebook" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=http://tjcloudwalker.top/2021/12/10/%E5%9C%A8CentOS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%BC%96%E8%AF%91%E6%9C%9F%E6%9C%AB%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6/"
-                    title="Teilen auf Twitter"
-                    aria-label="Teilen auf Twitter"
-                >
-                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=http://tjcloudwalker.top/2021/12/10/%E5%9C%A8CentOS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%BC%96%E8%AF%91%E6%9C%9F%E6%9C%AB%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6/"
-                    title="Teilen auf Google Plus"
-                    aria-label="Teilen auf Google Plus"
-                >
-                    <i class="fab fa-google-plus" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-        
-            
-        
-        <li class="post-action">
-            
-                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
-            
-                <i class="fa fa-list" aria-hidden="true"></i>
-            </a>
-        </li>
-    </ul>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:tjcloudwalker.top">
+  </form>
 </div>
 
-
-                </div>
-                
-    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
-        <i id="btn-close-shareoptions" class="fa fa-times"></i>
-        <ul class="share-options">
-            
-                
-                
-                <li class="share-option">
-                    <a
-                        class="share-option-btn"
-                        target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=http://tjcloudwalker.top/2021/12/10/%E5%9C%A8CentOS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%BC%96%E8%AF%91%E6%9C%9F%E6%9C%AB%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6/"
-                        aria-label="Teilen auf Facebook"
-                    >
-                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Teilen auf Facebook</span>
-                    </a>
-                </li>
-            
-                
-                
-                <li class="share-option">
-                    <a
-                        class="share-option-btn"
-                        target="new"
-                        href="https://twitter.com/intent/tweet?text=http://tjcloudwalker.top/2021/12/10/%E5%9C%A8CentOS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%BC%96%E8%AF%91%E6%9C%9F%E6%9C%AB%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6/"
-                        aria-label="Teilen auf Twitter"
-                    >
-                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Teilen auf Twitter</span>
-                    </a>
-                </li>
-            
-                
-                
-                <li class="share-option">
-                    <a
-                        class="share-option-btn"
-                        target="new"
-                        href="https://plus.google.com/share?url=http://tjcloudwalker.top/2021/12/10/%E5%9C%A8CentOS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%BC%96%E8%AF%91%E6%9C%9F%E6%9C%AB%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6/"
-                        aria-label="Teilen auf Google Plus"
-                    >
-                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Teilen auf Google Plus</span>
-                    </a>
-                </li>
-            
-        </ul>
-    </div>
-
-
-            
-        </div>
-        
-
-
-<div id="about">
-    <div id="about-card">
-        <div id="about-btn-close">
-            <i class="fa fa-times"></i>
-        </div>
-        
-            <h4 id="about-card-name">TJCloudWalker</h4>
-        
-            <div id="about-card-bio"><p>author.bio</p>
-</div>
-        
-        
-            <div id="about-card-job">
-                <i class="fa fa-briefcase"></i>
-                <br/>
-                <p>author.job</p>
-
-            </div>
-        
-        
-    </div>
-</div>
-
-        
-        
-<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
-        <!--SCRIPTS-->
-
-<script src="/assets/js/jquery.js"></script>
-
-
-<script src="/assets/js/jquery.fancybox.js"></script>
-
-
-<script src="/assets/js/thumbs.js"></script>
-
-
-<script src="/assets/js/tranquilpeak.js"></script>
-
-<!--SCRIPTS END-->
-
-
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
     
+      <li>
+        <a href="/2021/12/10/如何编写makefile详解/">如何编写makefile详解</a>
+      </li>
+    
+      <li>
+        <a href="/2021/12/10/在CentOS服务器上编译期末项目文件/">在CentOS服务器上编译期末项目文件</a>
+      </li>
+    
+      <li>
+        <a href="/2021/12/06/hello-world/">Hello World</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2022 TJCloudWalker
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
 
-
-    </body>
+</body>
 </html>
+

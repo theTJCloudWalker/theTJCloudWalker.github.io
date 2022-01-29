@@ -1,352 +1,80 @@
-
-<!DOCTYPE html>
-<html lang="zh-CN">
-    
+<!DOCTYPE HTML>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="行走就是圆梦，回去亦是前行">
-    <title>如何编写makefile详解 - 行走就是圆梦，回去亦是前行</title>
-    <meta name="author" content="TJCloudWalker">
-    
-    
-    
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"TJCloudWalker","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"如何编写makefile详解前言名为详解，实际划水，复制粘贴一步到位；\n一、makefile三要素\n目标：最终生成的文件\n依赖：通过什么文件生成\n规则命令：怎么去生成\n\n二、makefile书写格式makefile写法如下：\n\n目标：依赖\nTab键 规则命令\n\n下面举一个例子：\n环境：\n123456Mode                 LastWriteTime         Length Name----                 -------------         ------ ----d-----         2021/12/8     11:29                .vscoded-----         2021/12/8     11:21                included-----         2021/12/8     11:25                libd-----         2021/12/8     11:40                src\n\ninclude文件夹：\n1234567PS D:\\Program Files (x86)\\Microsoft VS Code\\code\\test&gt; ls include    目录: D:\\Program Files (x86)\\Microsoft VS Code\\code\\test\\includeMode                 LastWriteTime         Length Name----                 -------------         ------ -----a----         2021/12/8     11:31             86 head.h\n\nsrc文件夹：\n12345678910PS D:\\Program Files (x86)\\Microsoft VS Code\\code\\test&gt; ls src    目录: D:\\Program Files (x86)\\Microsoft VS Code\\code\\test\\srcMode                 LastWriteTime         Length Name----                 -------------         ------ -----a----         2021/12/8     11:31            104 add.c-a----         2021/12/8     11:31            183 main.c-a----         2021/12/8     11:36             49 makefile-a----         2021/12/8     11:31            104 sub.c\n\n各文件内容：\n123456PS D:\\Program Files (x86)\\Microsoft VS Code\\code\\test\\include&gt; cat head.h#ifndef __HEAD_H__#define __HEAD_H__int add(int, int);int sub(int, int);#endif\n\n123456789101112PS D:\\Program Files (x86)\\Microsoft VS Code\\code\\test\\src&gt; cat main.c#include &lt;stdio.h&gt;#include &quot;head.h&quot;int main(void)&#123;        int iSum = add(6, 3);        int iSub = sub(6, 3);        printf(&quot;Sum = %d\\n&quot;, iSum);        printf(&quot;Sub = %d\\n&quot;, iSub);        return 0;&#125;\n\n1234567#include&quot;head.h&quot;int add(int iNum1, int iNum2)&#123;        int iResult = iNum1 + iNum2;        return iResult;&#125;\n\n12345678PS D:\\Program Files (x86)\\Microsoft VS Code\\code\\test\\src&gt; cat sub.c#include&quot;head.h&quot;int sub(int iNum1, int iNum2)&#123;        int iResult = iNum1 - iNum2;        return iResult;&#125;\n\n特别地，makefile如下：\n1234program:*.c        gcc -o program -I ../include *.c # *.c实际上是省略的写法，代表以.c结尾的文件的集合，在这里相当于# program:main.c sub.c add.c\t# gcc -o program -I ../include main.c sub.c add.c\n\n实际上是gcc命令。\n在src文件夹下执行make命令：0.\n12PS D:\\Program Files (x86)\\Microsoft VS Code\\code\\test\\src&gt; make gcc -o program -I ../include *.c\n\n此时会发现src文件夹中多出了一个program.exe可执行文件：\n1234567891011PS D:\\Program Files (x86)\\Microsoft VS Code\\code\\test\\src&gt; ls    目录: D:\\Program Files (x86)\\Microsoft VS Code\\code\\test\\src    Mode                 LastWriteTime         Length Name----                 -------------         ------ -----a----         2021/12/8     11:31            104 add.c-a----         2021/12/8     11:31            183 main.c-a----         2021/12/8     11:36             49 makefile-a----         2021/12/8     11:53          55112 program.exe-a----         2021/12/8     11:31            104 sub.c\n\n执行program.exe查看结果：\n123PS D:\\Program Files (x86)\\Microsoft VS Code\\code\\test\\src&gt; ./programSum = 9Sub = 3\n\n在实际使用时，编译命令不可能是一句，否则会出现过长或是耦合度过高的问题(牵一发而动全身，修改一个文件要从头重新编译)，所以考虑编译过程分解，先生成.o文件，然后由.o文件生成结果，如下：\n12345678910PS D:\\Program Files (x86)\\Microsoft VS Code\\code\\test\\src&gt; cat makefileprogram:main.o add.o sub.o        gcc -o program -I ../include main.o add.o sub.omain.o:main.c        gcc -c main.c -I ../include add.o:main.c        gcc -c add.c -I ../includesub.o:        gcc -c sub.c -I ../include\n\n运行结果是不变的：\n123PS D:\\Program Files (x86)\\Microsoft VS Code\\code\\test\\src&gt; ./program.exeSum = 9Sub = 3\n\n这里虽然解决了之前的问题，但 makefile变得复杂，也更长，好在makefile 可以定义和使用变量，同时还可以使用函数，可以用来代替很多重复的工作：\n\n函数：\n\nwildcard：可以进行文件匹配patsubst：内容替换\n\nmakefile变量\n\n$@ ：代表目标$^ ：代表全部依赖$&lt; ：第一个依赖$? ：第一个变化的依赖\n\n\nmakefile改为如下：\n1234567891011121314151617181920212223242526272829# SrcFiles 定义资源文件# get all *.c filesSrcFiles=$(wildcard *.c)# ObjFiles 定义目标文件# all *.c files --&gt; *.o files\tObjFiles=$(patsubst %.c,%.o,$(SrcFiles)) # %是通配符，这里是main,add,sub的代替# 变量用法 $(var)program:$(ObjFiles)\tgcc -o program -I ../include $(ObjFiles)# program查找的时候依赖某个*.o，转换的时候发现没有，# 所以去找对应的生成规则，但只有%.o:%c，%是通配符，# 所以program将依赖的main.o、add.o和sub.o分别进行匹配，# 而main.o、add.o和sub.o的依赖分别匹配成main.c、add.c和sub.c%.o:%.c\t# 模式匹配规则，%@、$&lt;等变量，只能在规则中出现，\t# 我这边一个*.o依赖一个*.c，所以$&lt;\tgcc -c $&lt; -I ../include \t# 这是一个目标测试，依赖和规则可以不写，唯独不能没有目标# 因为makefile隐含规则，故测试需要指定目标：make testtest:\techo $(SrcFiles)\techo $(ObjFiles)\n\n可以注意到，src中多出了很多中间文件：\n1234567891011121314PS D:\\Program Files (x86)\\Microsoft VS Code\\code\\test\\src&gt; ls    目录: D:\\Program Files (x86)\\Microsoft VS Code\\code\\test\\srcMode                 LastWriteTime         Length Name----                 -------------         ------ -----a----         2021/12/8     11:31            104 add.c-a----         2021/12/8     12:05            740 add.o-a----         2021/12/8     12:04            181 main.c-a----         2021/12/8     12:05           1038 main.o-a----         2021/12/8     13:50            220 makefile-a----         2021/12/8     13:50          55112 program.exe-a----         2021/12/8     11:31            104 sub.c-a----         2021/12/8     12:05            724 sub.o\n\n这些中间文件需要有对应的删除方法，\n而Windows与Linux平台的删除语法有所不同：\n12345ifeq ($(OS),Windows_NT)RM\t\t\t:= del /q /felseRM = rm -fendif\n\n事实上，除了删除语法，也有很多其他细节有所区别：\n1234567891011121314151617ifeq ($(OS),Windows_NT)MAIN\t:= main.exeSOURCEDIRS\t:= $(SRC)INCLUDEDIRS\t:= $(INCLUDE)LIBDIRS\t\t:= $(LIB)FIXPATH = $(subst /,\\,$1)RM\t\t\t:= del /q /fMD\t:= mkdirelseMAIN\t:= mainSOURCEDIRS\t:= $(shell find $(SRC) -type d)INCLUDEDIRS\t:= $(shell find $(INCLUDE) -type d)LIBDIRS\t\t:= $(shell find $(LIB) -type d)FIXPATH = $1RM = rm -fMD\t:= mkdir -pendif\n\n最后附上一个Windows与Linux通用的makefile文件：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091## &#x27;make&#x27;        build executable file &#x27;main&#x27;# &#x27;make clean&#x27;  removes all .o and executable files## define the Cpp compiler to useCXX = g++# define any compile-time flagsCXXFLAGS\t:= -std=c++17 -Wall -Wextra -g# define library paths in addition to /usr/lib#   if I wanted to include libraries not in /usr/lib I&#x27;d specify#   their path using -Lpath, something like:LFLAGS =# define output directoryOUTPUT\t:= output# define source directorySRC\t\t:= src# define include directoryINCLUDE\t:= include# define lib directoryLIB\t\t:= libifeq ($(OS),Windows_NT)MAIN\t:= main.exeSOURCEDIRS\t:= $(SRC)INCLUDEDIRS\t:= $(INCLUDE)LIBDIRS\t\t:= $(LIB)FIXPATH = $(subst /,\\,$1)RM\t\t\t:= del /q /fMD\t:= mkdirelseMAIN\t:= mainSOURCEDIRS\t:= $(shell find $(SRC) -type d)INCLUDEDIRS\t:= $(shell find $(INCLUDE) -type d)LIBDIRS\t\t:= $(shell find $(LIB) -type d)FIXPATH = $1RM = rm -fMD\t:= mkdir -pendif# define any directories containing header files other than /usr/includeINCLUDES\t:= $(patsubst %,-I%, $(INCLUDEDIRS:%/=%))# define the C libsLIBS\t\t:= $(patsubst %,-L%, $(LIBDIRS:%/=%))# define the C source filesSOURCES\t\t:= $(wildcard $(patsubst %,%/*.cpp, $(SOURCEDIRS)))# define the C object files OBJECTS\t\t:= $(SOURCES:.cpp=.o)## The following part of the makefile is generic; it can be used to # build any executable just by changing the definitions above and by# deleting dependencies appended to the file from &#x27;make depend&#x27;#OUTPUTMAIN\t:= $(call FIXPATH,$(OUTPUT)/$(MAIN))all: $(OUTPUT) $(MAIN)\t@echo Executing &#x27;all&#x27; complete!$(OUTPUT):\t$(MD) $(OUTPUT)$(MAIN): $(OBJECTS) \t$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(OUTPUTMAIN) $(OBJECTS) $(LFLAGS) $(LIBS)# this is a suffix replacement rule for building .o&#x27;s from .c&#x27;s# it uses automatic variables $&lt;: the name of the prerequisite of# the rule(a .c file) and $@: the name of the target of the rule (a .o file) # (see the gnu make manual section about automatic variables).cpp.o:\t$(CXX) $(CXXFLAGS) $(INCLUDES) -c $&lt;  -o $@.PHONY: cleanclean:\t$(RM) $(OUTPUTMAIN)\t$(RM) $(call FIXPATH,$(OBJECTS))\t@echo Cleanup complete!run: all\t./$(OUTPUTMAIN)\t@echo Executing &#x27;run: all&#x27; complete!\n\n这份makefile来自danielpinto8zz6的***[C/C++ Project Generator](C/C++ Project Generator - Visual Studio Marketplace)(VSCode插件)***，推荐下载使用；\n","dateCreated":"2021-12-10T10:40:28+08:00","dateModified":"2021-12-10T10:48:42+08:00","datePublished":"2021-12-10T10:40:28+08:00","description":"","headline":"如何编写makefile详解","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://tjcloudwalker.top/2021/12/10/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99makefile%E8%AF%A6%E8%A7%A3/"},"publisher":{"@type":"Organization","name":"TJCloudWalker","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"http://tjcloudwalker.top/2021/12/10/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99makefile%E8%AF%A6%E8%A7%A3/"}</script>
-    <meta name="description" content="如何编写makefile详解前言名为详解，实际划水，复制粘贴一步到位； 一、makefile三要素 目标：最终生成的文件 依赖：通过什么文件生成 规则命令：怎么去生成  二、makefile书写格式makefile写法如下：  目标：依赖 Tab键 规则命令  下面举一个例子： 环境： 123456Mode                 LastWriteTime         Length">
-<meta property="og:type" content="blog">
-<meta property="og:title" content="如何编写makefile详解">
-<meta property="og:url" content="http://tjcloudwalker.top/2021/12/10/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99makefile%E8%AF%A6%E8%A7%A3/index.html">
-<meta property="og:site_name" content="行走就是圆梦，回去亦是前行">
-<meta property="og:description" content="如何编写makefile详解前言名为详解，实际划水，复制粘贴一步到位； 一、makefile三要素 目标：最终生成的文件 依赖：通过什么文件生成 规则命令：怎么去生成  二、makefile书写格式makefile写法如下：  目标：依赖 Tab键 规则命令  下面举一个例子： 环境： 123456Mode                 LastWriteTime         Length">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-12-10T02:40:28.000Z">
-<meta property="article:modified_time" content="2021-12-10T02:48:42.713Z">
-<meta property="article:author" content="TJCloudWalker">
-<meta name="twitter:card" content="summary">
-    
-    
-        
-    
-    
-    
-    
-    
-    <!--STYLES-->
-    
-<link rel="stylesheet" href="/assets/css/all.css">
+  <meta charset="utf-8">
+  
+  <title>如何编写makefile详解 › 行走就是圆梦，回去亦是前行</title>
+  <meta name="author" content="TJCloudWalker">
+  
+  <meta name="description" content="如何编写makefile详解前言名为详解，实际划水，复制粘贴一步到位；
+一、makefile三要素
+目标：最终生成的文件
+依赖：通过什么文件生成
+规则命令：怎么去生成
 
-    
-<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
+二、makefile书写格式makefile写法如下：
 
-    
-<link rel="stylesheet" href="/assets/css/thumbs.css">
+目标：依赖
+Tab键 规则命令
 
-    
-<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+下面举一个例子：
+环境：
+123456">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <!--STYLES END-->
-    
+  <meta property="og:title" content="如何编写makefile详解"/>
+  <meta property="og:site_name" content="行走就是圆梦，回去亦是前行"/>
 
-    
+  
+    <meta property="og:image" content=""/>
+  
 
-    
-        
-    
-</head>
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="行走就是圆梦，回去亦是前行" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
-    <body>
-        <div id="blog">
-            <!-- Define author's picture -->
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
-    
-
-<header id="header" data-behavior="4">
-    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
-    <div class="header-title">
-        <a
-            class="header-title-link"
-            href="/"
-            aria-label=""
-        >
-            行走就是圆梦，回去亦是前行
-        </a>
-    </div>
-    
-        
-            <a
-                class="header-right-picture "
-                href="#about"
-                aria-label="Öffne den Link: /#about"
-            >
-        
-        
-        </a>
-    
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">行走就是圆梦，回去亦是前行</a></h1>
+  <h2><a href="/"></a></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/about">About</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
 </header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">如何编写makefile详解</h1>
+  
 
-            <!-- Define author's picture -->
-
-
-<nav id="sidebar" data-behavior="4">
-    <div class="sidebar-container">
-        
-        
-            <ul class="sidebar-buttons">
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="/"
-                            
-                            rel="noopener"
-                            title="Home"
-                        >
-                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Home</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="/all-categories"
-                            
-                            rel="noopener"
-                            title="Kategorien"
-                        >
-                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Kategorien</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="/all-tags"
-                            
-                            rel="noopener"
-                            title="Tags"
-                        >
-                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Tags</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="/all-archives"
-                            
-                            rel="noopener"
-                            title="Archiv"
-                        >
-                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Archiv</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link open-algolia-search"
-                            href="#search"
-                            
-                            rel="noopener"
-                            title="Suche"
-                        >
-                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Suche</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="#about"
-                            
-                            rel="noopener"
-                            title="Über"
-                        >
-                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Über</span>
-                    </a>
-            </li>
-            
-        </ul>
-        
-            <ul class="sidebar-buttons">
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="https://github.com/"
-                            
-                                target="_blank"
-                            
-                            rel="noopener"
-                            title="GitHub"
-                        >
-                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">GitHub</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="http://stackoverflow.com/users"
-                            
-                                target="_blank"
-                            
-                            rel="noopener"
-                            title="Stack Overflow"
-                        >
-                        <i class="sidebar-button-icon fab fa-stack-overflow" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Stack Overflow</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="https://twitter.com/"
-                            
-                                target="_blank"
-                            
-                            rel="noopener"
-                            title="Twitter"
-                        >
-                        <i class="sidebar-button-icon fab fa-twitter" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Twitter</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="https://facebook.com/"
-                            
-                                target="_blank"
-                            
-                            rel="noopener"
-                            title="Facebook"
-                        >
-                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Facebook</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="https://plus.google.com/"
-                            
-                                target="_blank"
-                            
-                            rel="noopener"
-                            title="Google Plus"
-                        >
-                        <i class="sidebar-button-icon fab fa-google-plus" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Google Plus</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="https://www.linkedin.com/profile/"
-                            
-                                target="_blank"
-                            
-                            rel="noopener"
-                            title="LinkedIn"
-                        >
-                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">LinkedIn</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="/mailto"
-                            
-                            rel="noopener"
-                            title="E-Mail"
-                        >
-                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">E-Mail</span>
-                    </a>
-            </li>
-            
-        </ul>
-        
-            <ul class="sidebar-buttons">
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="/atom.xml"
-                            
-                            rel="noopener"
-                            title="RSS"
-                        >
-                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">RSS</span>
-                    </a>
-            </li>
-            
-        </ul>
-        
-    </div>
-</nav>
-
-            
-            <div id="main" data-behavior="4"
-                 class="
-                        hasCoverMetaIn
-                        ">
-                
-<article class="post">
-    
-    
-        <div class="post-header main-content-wrap text-left">
-    
-        <h1 class="post-title">
-            如何编写makefile详解
-        </h1>
-    
-    
-        <div class="post-meta">
-    <time datetime="2021-12-10T10:40:28+08:00">
-	
-		    10 12月 2021
-    	
-    </time>
-    
-</div>
-
-    
-</div>
-
-    
-    <div class="post-content markdown">
-        <div class="main-content-wrap">
-            <h1 id="如何编写makefile详解"><a href="#如何编写makefile详解" class="headerlink" title="如何编写makefile详解"></a>如何编写makefile详解</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>名为详解，实际划水，复制粘贴一步到位；</p>
+      
+        <time datetime="2021-12-10T02:40:28.000Z">2021-12-10</time>
+      
+    </header>
+    <div class="entry">
+      
+        <h1 id="如何编写makefile详解"><a href="#如何编写makefile详解" class="headerlink" title="如何编写makefile详解"></a>如何编写makefile详解</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>名为详解，实际划水，复制粘贴一步到位；</p>
 <h2 id="一、makefile三要素"><a href="#一、makefile三要素" class="headerlink" title="一、makefile三要素"></a>一、makefile三要素</h2><ul>
 <li>目标：最终生成的文件</li>
 <li>依赖：通过什么文件生成</li>
@@ -423,326 +151,88 @@
 
 <p>这份makefile来自<em><strong>danielpinto8zz6</strong></em>的***[C/C++ Project Generator](<a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=danielpinto8zz6.c-cpp-project-generator">C/C++ Project Generator - Visual Studio Marketplace</a>)(VSCode插件)***，推荐下载使用；</p>
 
-            
-
-
-        </div>
+      
     </div>
-    <div id="post-footer" class="post-footer main-content-wrap">
+      
+      <footer>
         
         
-            <div class="post-actions-wrap">
-    <nav>
-        <ul class="post-actions post-action-nav">
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/12/10/%E5%9C%A8CentOS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%BC%96%E8%AF%91%E6%9C%9F%E6%9C%AB%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6/"
-                    data-tooltip="在CentOS服务器上编译期末项目文件"
-                    aria-label="FRÜHER: 在CentOS服务器上编译期末项目文件"
-                >
-                    
-                        <i class="fa fa-angle-left" aria-hidden="true"></i>
-                        <span class="hide-xs hide-sm text-small icon-ml">FRÜHER</span>
-                    </a>
-            </li>
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/12/06/hello-world/"
-                    data-tooltip="Hello World"
-                    aria-label="NÄCHSTER: Hello World"
-                >
-                    
-                        <span class="hide-xs hide-sm text-small icon-mr">NÄCHSTER</span>
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </a>
-            </li>
-        </ul>
-    </nav>
-    <ul class="post-actions post-action-share">
-        <li class="post-action hide-lg hide-md hide-sm">
-            <a
-                class="post-action-btn btn btn--default btn-open-shareoptions"
-                href="#btn-open-shareoptions"
-                aria-label="Diesen Beitrag teilen"
-            >
-                <i class="fa fa-share-alt" aria-hidden="true"></i>
-            </a>
-        </li>
         
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://tjcloudwalker.top/2021/12/10/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99makefile%E8%AF%A6%E8%A7%A3/"
-                    title="Teilen auf Facebook"
-                    aria-label="Teilen auf Facebook"
-                >
-                    <i class="fab fa-facebook" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=http://tjcloudwalker.top/2021/12/10/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99makefile%E8%AF%A6%E8%A7%A3/"
-                    title="Teilen auf Twitter"
-                    aria-label="Teilen auf Twitter"
-                >
-                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=http://tjcloudwalker.top/2021/12/10/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99makefile%E8%AF%A6%E8%A7%A3/"
-                    title="Teilen auf Google Plus"
-                    aria-label="Teilen auf Google Plus"
-                >
-                    <i class="fab fa-google-plus" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-        
-            
-        
-        <li class="post-action">
-            
-                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
-            
-                <i class="fa fa-list" aria-hidden="true"></i>
-            </a>
-        </li>
-    </ul>
-</div>
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
 
-
-        
-        
-            
-        
-    </div>
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
 </article>
 
 
+<section id="comment">
+  
+</section>
 
-                <footer id="footer" class="main-content-wrap">
-    <span class="copyrights">
-        Copyrights &copy; 2022 TJCloudWalker. All Rights Reserved.
-    </span>
-</footer>
 
-            </div>
-            
-                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
-                    <div class="post-actions-wrap">
-    <nav>
-        <ul class="post-actions post-action-nav">
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/12/10/%E5%9C%A8CentOS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%BC%96%E8%AF%91%E6%9C%9F%E6%9C%AB%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6/"
-                    data-tooltip="在CentOS服务器上编译期末项目文件"
-                    aria-label="FRÜHER: 在CentOS服务器上编译期末项目文件"
-                >
-                    
-                        <i class="fa fa-angle-left" aria-hidden="true"></i>
-                        <span class="hide-xs hide-sm text-small icon-ml">FRÜHER</span>
-                    </a>
-            </li>
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/12/06/hello-world/"
-                    data-tooltip="Hello World"
-                    aria-label="NÄCHSTER: Hello World"
-                >
-                    
-                        <span class="hide-xs hide-sm text-small icon-mr">NÄCHSTER</span>
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </a>
-            </li>
-        </ul>
-    </nav>
-    <ul class="post-actions post-action-share">
-        <li class="post-action hide-lg hide-md hide-sm">
-            <a
-                class="post-action-btn btn btn--default btn-open-shareoptions"
-                href="#btn-open-shareoptions"
-                aria-label="Diesen Beitrag teilen"
-            >
-                <i class="fa fa-share-alt" aria-hidden="true"></i>
-            </a>
-        </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://tjcloudwalker.top/2021/12/10/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99makefile%E8%AF%A6%E8%A7%A3/"
-                    title="Teilen auf Facebook"
-                    aria-label="Teilen auf Facebook"
-                >
-                    <i class="fab fa-facebook" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=http://tjcloudwalker.top/2021/12/10/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99makefile%E8%AF%A6%E8%A7%A3/"
-                    title="Teilen auf Twitter"
-                    aria-label="Teilen auf Twitter"
-                >
-                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=http://tjcloudwalker.top/2021/12/10/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99makefile%E8%AF%A6%E8%A7%A3/"
-                    title="Teilen auf Google Plus"
-                    aria-label="Teilen auf Google Plus"
-                >
-                    <i class="fab fa-google-plus" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-        
-            
-        
-        <li class="post-action">
-            
-                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
-            
-                <i class="fa fa-list" aria-hidden="true"></i>
-            </a>
-        </li>
-    </ul>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:tjcloudwalker.top">
+  </form>
 </div>
 
-
-                </div>
-                
-    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
-        <i id="btn-close-shareoptions" class="fa fa-times"></i>
-        <ul class="share-options">
-            
-                
-                
-                <li class="share-option">
-                    <a
-                        class="share-option-btn"
-                        target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=http://tjcloudwalker.top/2021/12/10/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99makefile%E8%AF%A6%E8%A7%A3/"
-                        aria-label="Teilen auf Facebook"
-                    >
-                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Teilen auf Facebook</span>
-                    </a>
-                </li>
-            
-                
-                
-                <li class="share-option">
-                    <a
-                        class="share-option-btn"
-                        target="new"
-                        href="https://twitter.com/intent/tweet?text=http://tjcloudwalker.top/2021/12/10/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99makefile%E8%AF%A6%E8%A7%A3/"
-                        aria-label="Teilen auf Twitter"
-                    >
-                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Teilen auf Twitter</span>
-                    </a>
-                </li>
-            
-                
-                
-                <li class="share-option">
-                    <a
-                        class="share-option-btn"
-                        target="new"
-                        href="https://plus.google.com/share?url=http://tjcloudwalker.top/2021/12/10/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99makefile%E8%AF%A6%E8%A7%A3/"
-                        aria-label="Teilen auf Google Plus"
-                    >
-                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Teilen auf Google Plus</span>
-                    </a>
-                </li>
-            
-        </ul>
-    </div>
-
-
-            
-        </div>
-        
-
-
-<div id="about">
-    <div id="about-card">
-        <div id="about-btn-close">
-            <i class="fa fa-times"></i>
-        </div>
-        
-            <h4 id="about-card-name">TJCloudWalker</h4>
-        
-            <div id="about-card-bio"><p>author.bio</p>
-</div>
-        
-        
-            <div id="about-card-job">
-                <i class="fa fa-briefcase"></i>
-                <br/>
-                <p>author.job</p>
-
-            </div>
-        
-        
-    </div>
-</div>
-
-        
-        
-<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
-        <!--SCRIPTS-->
-
-<script src="/assets/js/jquery.js"></script>
-
-
-<script src="/assets/js/jquery.fancybox.js"></script>
-
-
-<script src="/assets/js/thumbs.js"></script>
-
-
-<script src="/assets/js/tranquilpeak.js"></script>
-
-<!--SCRIPTS END-->
-
-
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
     
+      <li>
+        <a href="/2021/12/10/如何编写makefile详解/">如何编写makefile详解</a>
+      </li>
+    
+      <li>
+        <a href="/2021/12/10/在CentOS服务器上编译期末项目文件/">在CentOS服务器上编译期末项目文件</a>
+      </li>
+    
+      <li>
+        <a href="/2021/12/06/hello-world/">Hello World</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2022 TJCloudWalker
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
 
-
-    </body>
+</body>
 </html>
+
