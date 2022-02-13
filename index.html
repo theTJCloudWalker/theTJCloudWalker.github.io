@@ -51,6 +51,99 @@
     <header>
       
   
+    <h1 class="title"><a href="/2022/02/13/hello-world/">Hello World</a></h1>
+  
+
+      
+        <time datetime="2022-02-13T08:24:56.946Z">2022-02-13</time>
+      
+    </header>
+    <div class="entry">
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2022/01/30/cmake语法/">cmake语法</a></h1>
+  
+
+      
+        <time datetime="2022-01-30T11:50:10.000Z">2022-01-30</time>
+      
+    </header>
+    <div class="entry">
+      
+        <h1 id="CMake语法"><a href="#CMake语法" class="headerlink" title="# CMake语法"></a># CMake语法</h1><ul>
+<li><p><input disabled="" type="checkbox">  PROJECT关键字<br>可以用来指定工程的名字和支持的语言，默认支持所有语言</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PROJECT(HELLO)指定了工程的名字，默认支持所有语言</span><br><span class="line">PROJECT(HELLO CXX)指定了工程的名字，支持语言C++</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>该指定隐式定义了两个CMAKE变量<br><projectname>_BINARY_DIR,本例中是HELLO_BINARY_DIR<br><projectname>__SOURCE_DIR,HELLO_SOURCE_DIR<br>MESSAGE关键字可以直接使用两个变量，当前都指向当前的工作目录，<br>如果改变工程名，这两个变量名也会改变<br>解决方法：定义PROJECT_BINARY_DIR和PROJECT_SOURCE_DIR</p>
+<ul>
+<li><p><input disabled="" type="checkbox">  SET关键字<br>用来显示指定变量<br>SET(SRC_LIST main.cpp)<br>SET(SRC_LIST main.cpp t.cpp)</p>
+</li>
+<li><p><input disabled="" type="checkbox">  MESSAGE关键字<br>向终端输出用户自定义的信息<br>主要包含三种信息：<br>SEND_ERROR,产生错误，生成过程被跳过<br>STATUS,输出前缀为 的信息<br>FATAL ERROR,立即终止所有cmake过程</p>
+</li>
+<li><p><input disabled="" type="checkbox">  ADD_EXECUTABLE关键字<br>ADD_EXECUTABLE(hello ${SRC_LIST}),生成的可执行文件名是hello，源文件读取SRC_LIST中的内容</p>
+</li>
+</ul>
+<h2 id="语法基本规则"><a href="#语法基本规则" class="headerlink" title="语法基本规则"></a>语法基本规则</h2><ul>
+<li><input disabled="" type="checkbox"> 变量用**${}**方式取值，但在IF语句中直接使用变量名</li>
+<li><input disabled="" type="checkbox"> 指令(参数1 参数2……)参数用括弧括起，参数之间用<strong>空格</strong>或者<strong>分号</strong>分开</li>
+<li><input disabled="" type="checkbox"> 指令是大小写无关的，参数反之</li>
+</ul>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>当源文件名中含有空格时，必须加双引号<br>如：<br>SET(SRC_LIST “mai n.cpp”)<br>ADD_EXECUTABLE(hello main)可以不写后缀，但不推荐</p>
+<h2 id="内部构建与外部构建"><a href="#内部构建与外部构建" class="headerlink" title="内部构建与外部构建"></a>内部构建与外部构建</h2><p>内部构建产生的临时文件多，不方便清理；<br>外部构建就是把生成的临时文件放在build目录下，不会对源文件产生任何影响，推荐使用；</p>
+
+      
+    </div>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  <div class="post-content">
+    <header>
+      
+  
     <h1 class="title"><a href="/2021/12/10/如何编写makefile详解/">如何编写makefile详解</a></h1>
   
 
@@ -233,49 +326,6 @@
 
 
 
-  <article class="post">
-  <div class="post-content">
-    <header>
-      
-  
-    <h1 class="title"><a href="/2021/12/06/hello-world/">Hello World</a></h1>
-  
-
-      
-        <time datetime="2021-12-06T02:55:24.612Z">2021-12-06</time>
-      
-    </header>
-    <div class="entry">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-      </footer>
-  </div>
-</article>
-
-
-
-
-
 
 <nav id="pagination">
   
@@ -296,15 +346,19 @@
   <ul class="entry">
     
       <li>
+        <a href="/2022/02/13/hello-world/">Hello World</a>
+      </li>
+    
+      <li>
+        <a href="/2022/01/30/cmake语法/">cmake语法</a>
+      </li>
+    
+      <li>
         <a href="/2021/12/10/如何编写makefile详解/">如何编写makefile详解</a>
       </li>
     
       <li>
         <a href="/2021/12/10/在CentOS服务器上编译期末项目文件/">在CentOS服务器上编译期末项目文件</a>
-      </li>
-    
-      <li>
-        <a href="/2021/12/06/hello-world/">Hello World</a>
       </li>
     
   </ul>

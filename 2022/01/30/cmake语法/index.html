@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>cmake语法 › 行走就是圆梦，回去亦是前行</title>
+  <meta name="author" content="TJCloudWalker">
+  
+  <meta name="description" content="# CMake语法
+  PROJECT关键字可以用来指定工程的名字和支持的语言，默认支持所有语言
+12PROJECT(HELLO)指定了工程的名字，默认支持所有语言PROJECT(HELLO CXX)指定了工程的名字，支持语言C++
+
+该指定隐式定义了两个CMAKE变量_BINARY_DIR,本例中">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="cmake语法"/>
+  <meta property="og:site_name" content="行走就是圆梦，回去亦是前行"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="行走就是圆梦，回去亦是前行" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">行走就是圆梦，回去亦是前行</a></h1>
+  <h2><a href="/"></a></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/about">About</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">cmake语法</h1>
+  
+
+      
+        <time datetime="2022-01-30T11:50:10.000Z">2022-01-30</time>
+      
+    </header>
+    <div class="entry">
+      
+        <h1 id="CMake语法"><a href="#CMake语法" class="headerlink" title="# CMake语法"></a># CMake语法</h1><ul>
+<li><p><input disabled="" type="checkbox">  PROJECT关键字<br>可以用来指定工程的名字和支持的语言，默认支持所有语言</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PROJECT(HELLO)指定了工程的名字，默认支持所有语言</span><br><span class="line">PROJECT(HELLO CXX)指定了工程的名字，支持语言C++</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>该指定隐式定义了两个CMAKE变量<br><projectname>_BINARY_DIR,本例中是HELLO_BINARY_DIR<br><projectname>__SOURCE_DIR,HELLO_SOURCE_DIR<br>MESSAGE关键字可以直接使用两个变量，当前都指向当前的工作目录，<br>如果改变工程名，这两个变量名也会改变<br>解决方法：定义PROJECT_BINARY_DIR和PROJECT_SOURCE_DIR</p>
+<ul>
+<li><p><input disabled="" type="checkbox">  SET关键字<br>用来显示指定变量<br>SET(SRC_LIST main.cpp)<br>SET(SRC_LIST main.cpp t.cpp)</p>
+</li>
+<li><p><input disabled="" type="checkbox">  MESSAGE关键字<br>向终端输出用户自定义的信息<br>主要包含三种信息：<br>SEND_ERROR,产生错误，生成过程被跳过<br>STATUS,输出前缀为 的信息<br>FATAL ERROR,立即终止所有cmake过程</p>
+</li>
+<li><p><input disabled="" type="checkbox">  ADD_EXECUTABLE关键字<br>ADD_EXECUTABLE(hello ${SRC_LIST}),生成的可执行文件名是hello，源文件读取SRC_LIST中的内容</p>
+</li>
+</ul>
+<h2 id="语法基本规则"><a href="#语法基本规则" class="headerlink" title="语法基本规则"></a>语法基本规则</h2><ul>
+<li><input disabled="" type="checkbox"> 变量用**${}**方式取值，但在IF语句中直接使用变量名</li>
+<li><input disabled="" type="checkbox"> 指令(参数1 参数2……)参数用括弧括起，参数之间用<strong>空格</strong>或者<strong>分号</strong>分开</li>
+<li><input disabled="" type="checkbox"> 指令是大小写无关的，参数反之</li>
+</ul>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>当源文件名中含有空格时，必须加双引号<br>如：<br>SET(SRC_LIST “mai n.cpp”)<br>ADD_EXECUTABLE(hello main)可以不写后缀，但不推荐</p>
+<h2 id="内部构建与外部构建"><a href="#内部构建与外部构建" class="headerlink" title="内部构建与外部构建"></a>内部构建与外部构建</h2><p>内部构建产生的临时文件多，不方便清理；<br>外部构建就是把生成的临时文件放在build目录下，不会对源文件产生任何影响，推荐使用；</p>
+
+      
+    </div>
+      
+      <footer>
+        
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:tjcloudwalker.top">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2022/02/13/hello-world/">Hello World</a>
+      </li>
+    
+      <li>
+        <a href="/2022/01/30/cmake语法/">cmake语法</a>
+      </li>
+    
+      <li>
+        <a href="/2021/12/10/如何编写makefile详解/">如何编写makefile详解</a>
+      </li>
+    
+      <li>
+        <a href="/2021/12/10/在CentOS服务器上编译期末项目文件/">在CentOS服务器上编译期末项目文件</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2022 TJCloudWalker
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+</body>
+</html>
+
