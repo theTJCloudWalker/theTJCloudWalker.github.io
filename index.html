@@ -51,6 +51,146 @@
     <header>
       
   
+    <h1 class="title"><a href="/2022/03/05/databaseNote/">databaseNote</a></h1>
+  
+
+      
+        <time datetime="2022-03-05T02:07:25.000Z">2022-03-05</time>
+      
+    </header>
+    <div class="entry">
+      
+        <h1 id="数据库系统概念-第七版"><a href="#数据库系统概念-第七版" class="headerlink" title="数据库系统概念(第七版)"></a>数据库系统概念(第七版)</h1><h2 id="Chapter1-引言"><a href="#Chapter1-引言" class="headerlink" title="Chapter1 引言"></a>Chapter1 引言</h2><p>……</p>
+<h2 id="Chapter2-关系模型介绍"><a href="#Chapter2-关系模型介绍" class="headerlink" title="Chapter2 关系模型介绍"></a>Chapter2 关系模型介绍</h2><h3 id="2-1-关系数据库的结构"><a href="#2-1-关系数据库的结构" class="headerlink" title="2.1 关系数据库的结构"></a>2.1 关系数据库的结构</h3><p>关系数据库由表(table)的集合构成，每张表被赋予一个唯一的名称。</p>
+<p>一般来说，表中的一行代表了一组值之间的某种联系。在关系模型中，术语关系被用来指代表，而术语数组被用来指代行。类似地，属于属性指的是表中的列。</p>
+<h3 id="2-2-数据库模式"><a href="#2-2-数据库模式" class="headerlink" title="2.2 数据库模式"></a>2.2 数据库模式</h3><p>……</p>
+<h3 id="2-3-码"><a href="#2-3-码" class="headerlink" title="2.3 码"></a>2.3 码</h3><p><strong>超码</strong>是一个或多个属性的集合，将这些属性组合在一起可以允许我们在一个关系中唯一地标识出一个元组。</p>
+<p>我们通常只对这样的超码感兴趣：它们的任意真子集都不是超码。这样的最小超码被称为<strong>候选码</strong>。</p>
+<p>我们将用<strong>主码</strong>这个术语来代表被数据库设计者选中来作为在一个关系中区分不同元组的主要方式的候选码。</p>
+<p><strong>外码约束</strong>（没看懂，稍后）</p>
+<h3 id="2-4-模式图"><a href="#2-4-模式图" class="headerlink" title="2.4 模式图"></a>2.4 模式图</h3><p>……</p>
+<h3 id="2-5-关系查询语言"><a href="#2-5-关系查询语言" class="headerlink" title="2.5 关系查询语言"></a>2.5 关系查询语言</h3><p>查询语言是用户用来从数据库中请求获取信息的语言。这类语言通常比标准的程序设计语言的层次更高。查询语言可以分为命令式的、函数的以及声明式的。</p>
+<p>在<strong>命令行查询语言</strong>中，用户指导系统在数据库上执行特定的运算序列以计算出所需的结果；这类语言通常有一个状态变量的概念，状态变量在计算的过程中被更新。</p>
+<p>在<strong>函数式查询语言</strong>中，计算被表示为对函数的求值，这些函数可以在数据库中的数据上运行或在其他函数给出的结果上运行；函数没有附带作用，并且它们并不更新程序的状态。</p>
+<p>在<strong>声明式查询语言</strong>中，用户只需描述所需的信息，而不用给出获取该信息的具体步骤序列或函数调用，所需的信息通常使用某种形式的数学逻辑来描述。找出获得所需信息的方式是数据库系统的工作。</p>
+<p>​        有许多“纯”查询语言。</p>
+<ul>
+<li><p>关系代数是一种函数式查询语言，关系代数构成了SQL查询语言的理论基础；</p>
+</li>
+<li><p>元组关系演算和域关系演算是声明式的</p>
+<p>这些查询语言是简洁且形式化的，</p>
+</li>
+</ul>
+<h3 id="2-6-关系代数"><a href="#2-6-关系代数" class="headerlink" title="2.6 关系代数"></a>2.6 关系代数</h3><p>关系代数由一组运算组成，这些运算接受一个或两个关系作为输入，并生成一个新的关系作为它们的结果。</p>
+<p>包含一元运算和二元运算。</p>
+<h4 id="2-6-1-选择运算"><a href="#2-6-1-选择运算" class="headerlink" title="2.6.1 选择运算"></a>2.6.1 选择运算</h4><p>选择运算选出满足给定谓词的元组。使用小写的希腊字母sigma $$\sigma$$来表示选择。</p>
+<p>谓词写在$\sigma$的下标中。作为参数的关系写在 $$\sigma$$后的括号内。因此，为了选出instructor关系的元组，使得它们对应于物理系中的教师，我们写为：</p>
+ 
+$$
+{\sigma_{{dept\_name}="Physics"}}^{(instructor)}
+$$
+
+<p>找出薪水高于90000的所有教师：</p>
+ 
+$$
+\sigma_{salary>9000}(instructor)
+$$
+
+
+<h4 id="2-6-2-投影运算"><a href="#2-6-2-投影运算" class="headerlink" title="2.6.2 投影运算"></a>2.6.2 投影运算</h4><p> 假设我们希望列出所有教师的ID、name和salary，但我们并不关心dept_name。投影运算可以帮我们生成这样的关系。投影运算是一种一元运算，返回它的参数关系，但滤掉了特定的属性。投影用大写希腊字母pi（$\Pi$）表示，如</p>
+
+$$
+\Pi_{ID,name,salary}(instructor)
+$$
+
+
+<h4 id="2-6-3-关系运算的复合"><a href="#2-6-3-关系运算的复合" class="headerlink" title="2.6.3 关系运算的复合"></a>2.6.3 关系运算的复合</h4><p>关系运算的结果本身也是关系这一事实是重要的</p>
+<p>查找物理系所有教师的名字：</p>
+
+$$
+\Pi_{name}(\sigma_{dept\_name='Physics'}(instructor))
+$$
+
+
+<h4 id="2-6-4-笛卡尔积运算"><a href="#2-6-4-笛卡尔积运算" class="headerlink" title="2.6.4 笛卡尔积运算"></a>2.6.4 笛卡尔积运算</h4><p>笛卡尔积运算用叉号表示，允许我们结合来自任意两个关系的信息  </p>
+
+$$
+r_1\times r_2
+$$
+
+<p>区分两个关系中相同的属性</p>
+<h4 id="2-6-5-连接运算"><a href="#2-6-5-连接运算" class="headerlink" title="2.6.5 连接运算"></a>2.6.5 连接运算</h4><p>……</p>
+<h4 id="2-6-6-集合运算"><a href="#2-6-6-集合运算" class="headerlink" title="2.6.6 集合运算"></a>2.6.6 集合运算</h4><h4 id="2-6-7-赋值运算"><a href="#2-6-7-赋值运算" class="headerlink" title="2.6.7 赋值运算"></a>2.6.7 赋值运算</h4><h4 id="2-6-8-更名运算"><a href="#2-6-8-更名运算" class="headerlink" title="2.6.8 更名运算"></a>2.6.8 更名运算</h4><h4 id="2-6-9-等价查询"><a href="#2-6-9-等价查询" class="headerlink" title="2.6.9 等价查询"></a>2.6.9 等价查询</h4><h2 id="Chapter3-SQL介绍"><a href="#Chapter3-SQL介绍" class="headerlink" title="Chapter3 SQL介绍"></a>Chapter3 SQL介绍</h2><h3 id="3-1-SQL查询语言概览"><a href="#3-1-SQL查询语言概览" class="headerlink" title="3.1 SQL查询语言概览"></a>3.1 SQL查询语言概览</h3><p>SQL语言有几个部分：</p>
+<ul>
+<li>数据定义语言（data-defination language,DDL）。SQL DDL提供定义关系模式、删除关系以及修改关系模式的命令；</li>
+<li>数据操作语言（data-manipulation language,DML）.SQL DML提供从数据库中查询信息以及在数据库中插入元组、删除元组、修改元组的能力；</li>
+<li>完整性。SQL DDL包括定义完整性约束的命令，保存在数据库中的数据必须满足所定义的完整性约束。破坏完整性的约束是不允许的。</li>
+<li>视图定义。</li>
+<li>事务控制。</li>
+<li>嵌入式SQL.</li>
+<li>授权。</li>
+</ul>
+<h3 id="3-2-SQL数据定义"><a href="#3-2-SQL数据定义" class="headerlink" title="3.2 SQL数据定义"></a>3.2 SQL数据定义</h3><h4 id="3-2-1-基本类型"><a href="#3-2-1-基本类型" class="headerlink" title="3.2.1 基本类型"></a>3.2.1 基本类型</h4><p>SQL标准支持多种固有类型。</p>
+<ul>
+<li>char(n):具有用户指定长度n的固定长度的字符串。全写为character；</li>
+<li>varchar(n):具有用户指定的最大长度n的可变长度的字符串</li>
+<li>int:整数（依赖于机器的整数有限子集）</li>
+<li>smallint:小整数</li>
+<li>numeric(p,d):具有用户指定京都的定点数。这个数有p位数字（外加一个符号位），并且小数点右边有p位中的d位数字</li>
+<li>real,double precision:浮点数与双精度浮点数，精度依赖于机器</li>
+<li>float(n):精度至少为n位数字的浮点数</li>
+</ul>
+<h4 id="3-2-2-基本模式定义"><a href="#3-2-2-基本模式定义" class="headerlink" title="3.2.2 基本模式定义"></a>3.2.2 基本模式定义</h4><p>通过create table来定义SQL关系。下面的命令在数据库中创建了一个department关系：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> department</span><br><span class="line">	(dept_name <span class="type">varchar</span>(<span class="number">20</span>)</span><br><span class="line">	 building  <span class="type">varchar</span>(<span class="number">15</span>)</span><br><span class="line">	 budget    <span class="type">numeric</span>(<span class="number">12</span>,<span class="number">2</span>)</span><br><span class="line">	 <span class="keyword">primary</span> key(dept_name))</span><br></pre></td></tr></table></figure>
+
+<p>create table命令的通用形式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">create table r</span><br><span class="line">	(A1 D1,</span><br><span class="line">	A2 D2,</span><br><span class="line">    ……</span><br><span class="line">    An Dn,</span><br><span class="line">    &lt;完整性约束1&gt;，</span><br><span class="line">    ……，</span><br><span class="line">    &lt;完整性约束k&gt;);</span><br></pre></td></tr></table></figure>
+
+<p>r是关系名，每个Ai是关系r的模式中的一个属性名。Di是Ai的域；</p>
+<p>SQL支持许多不同的完整性约束：</p>
+<ul>
+<li>primary key(Aj1,Aj2,……Ajm):主码声明表示属性(Aj1,Aj2,……Ajm)构成关系的主码。主码属性必须是非空且唯一的：也就是说，没有元组会在主码上取空值；</li>
+<li>foreign key(Ak1,Ak2,……Akn)reference s:外码声明表示关系中任意元组在属性(Ak1,Ak2,……Akn)上的取值必须对应于关系s中某元组在主码属性上的取值。</li>
+<li>not null：一个属性上的非空约束表示在该属性上不允许存在空值。</li>
+</ul>
+<p>一个新创建的关系最初是空的。向关系中插入元组、更新元组以及删除元组是通过数据操纵语言insert\update和delete来完成的</p>
+<p>从数据库中去掉一个关系，我们使用drop table命令。drop table用于从数据库中删除关于被去掉关系的所有信息。命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop table r</span><br></pre></td></tr></table></figure>
+
+<p>是比</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete from r</span><br></pre></td></tr></table></figure>
+
+<p>更强的语句。后者保留关系r，但删除r中的所有元组。前者不仅删除所有元组，还删除r的模式</p>
+<p>可以用alter table为已有关系增加属性</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> r <span class="keyword">add</span> A D</span><br></pre></td></tr></table></figure>
+
+<p>其中r是现有关系的名称，A是待添加属性的名称，D是待添加属性的类型</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter drop A</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-SQL查询的基本结构"><a href="#3-3-SQL查询的基本结构" class="headerlink" title="3.3 SQL查询的基本结构"></a>3.3 SQL查询的基本结构</h3><h4 id="3-3-1-单关系查询"><a href="#3-3-1-单关系查询" class="headerlink" title="3.3.1 单关系查询"></a>3.3.1 单关系查询</h4><p>select distinct可以去除重复</p>
+<p>all为缺省选项</p>
+<p>updating……</p>
+
+      
+    </div>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  <div class="post-content">
+    <header>
+      
+  
     <h1 class="title"><a href="/2022/03/02/Failed-to-initialize-toolbox-jvm-application一种解决方案/">Failed to initialize toolbox jvm application一种解决方案</a></h1>
   
 
@@ -381,6 +521,10 @@
   <ul class="entry">
     
       <li>
+        <a href="/2022/03/05/databaseNote/">databaseNote</a>
+      </li>
+    
+      <li>
         <a href="/2022/03/02/Failed-to-initialize-toolbox-jvm-application一种解决方案/">Failed to initialize toolbox jvm application一种解决方案</a>
       </li>
     
@@ -394,10 +538,6 @@
     
       <li>
         <a href="/2021/12/10/在CentOS服务器上编译期末项目文件/">在CentOS服务器上编译期末项目文件</a>
-      </li>
-    
-      <li>
-        <a href="/2021/12/10/如何编写makefile详解/">如何编写makefile详解</a>
       </li>
     
   </ul>
