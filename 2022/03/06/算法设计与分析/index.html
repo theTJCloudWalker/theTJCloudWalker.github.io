@@ -3,19 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>cmake语法 › 行走就是圆梦，回去亦是前行</title>
+  <title>算法设计与分析 › 行走就是圆梦，回去亦是前行</title>
   <meta name="author" content="TJCloudWalker">
   
-  <meta name="description" content="# CMake语法
-  PROJECT关键字可以用来指定工程的名字和支持的语言，默认支持所有语言
-12PROJECT(HELLO)指定了工程的名字，默认支持所有语言PROJECT(HELLO CXX)指定了工程的名字，支持语言C++
+  <meta name="description" content="Algorithmics绪论1.1 什么是算法算法是一系列解决问题的明确指令，也就是说，对于符合一定规范的输入，能够在有限时间内获得要求的输出。
 
-该指定隐式定义了两个CMAKE变量_BINARY_DIR,本例中">
+算法的每一个步骤都必须没有歧义，不能有半点含糊。
+必须认真确定算法所处理的输入的值域。
+同一算法可以用几种不同的形式来描述。
+同一问题，可能存在几种不同">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="cmake语法"/>
+  <meta property="og:title" content="算法设计与分析"/>
   <meta property="og:site_name" content="行走就是圆梦，回去亦是前行"/>
 
   
@@ -56,36 +57,41 @@
     <header>
       
   
-    <h1 class="title">cmake语法</h1>
+    <h1 class="title">算法设计与分析</h1>
   
 
       
-        <time datetime="2022-01-30T11:50:10.000Z">2022-01-30</time>
+        <time datetime="2022-03-06T02:47:07.000Z">2022-03-06</time>
       
     </header>
     <div class="entry">
       
-        <h1 id="CMake语法"><a href="#CMake语法" class="headerlink" title="# CMake语法"></a># CMake语法</h1><ul>
-<li><p><input disabled="" type="checkbox">  PROJECT关键字<br>可以用来指定工程的名字和支持的语言，默认支持所有语言</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PROJECT(HELLO)指定了工程的名字，默认支持所有语言</span><br><span class="line">PROJECT(HELLO CXX)指定了工程的名字，支持语言C++</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>该指定隐式定义了两个CMAKE变量<br><projectname>_BINARY_DIR,本例中是HELLO_BINARY_DIR<br><projectname>__SOURCE_DIR,HELLO_SOURCE_DIR<br>MESSAGE关键字可以直接使用两个变量，当前都指向当前的工作目录，<br>如果改变工程名，这两个变量名也会改变<br>解决方法：定义PROJECT_BINARY_DIR和PROJECT_SOURCE_DIR</p>
+        <h1 id="Algorithmics"><a href="#Algorithmics" class="headerlink" title="Algorithmics"></a>Algorithmics</h1><h2 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h2><h3 id="1-1-什么是算法"><a href="#1-1-什么是算法" class="headerlink" title="1.1 什么是算法"></a>1.1 什么是算法</h3><p><strong>算法</strong>是一系列解决问题的明确指令，也就是说，对于符合一定规范的输入，能够在有限时间内获得要求的输出。</p>
 <ul>
-<li><p><input disabled="" type="checkbox">  SET关键字<br>用来显示指定变量<br>SET(SRC_LIST main.cpp)<br>SET(SRC_LIST main.cpp t.cpp)</p>
-</li>
-<li><p><input disabled="" type="checkbox">  MESSAGE关键字<br>向终端输出用户自定义的信息<br>主要包含三种信息：<br>SEND_ERROR,产生错误，生成过程被跳过<br>STATUS,输出前缀为 的信息<br>FATAL ERROR,立即终止所有cmake过程</p>
-</li>
-<li><p><input disabled="" type="checkbox">  ADD_EXECUTABLE关键字<br>ADD_EXECUTABLE(hello ${SRC_LIST}),生成的可执行文件名是hello，源文件读取SRC_LIST中的内容</p>
-</li>
+<li>算法的每一个步骤都必须没有歧义，不能有半点含糊。</li>
+<li>必须认真确定算法所处理的输入的值域。</li>
+<li>同一算法可以用几种不同的形式来描述。</li>
+<li>同一问题，可能存在几种不同的算法。</li>
+<li>针对同一问题的算法可能基于完全不同的解题思路。</li>
 </ul>
-<h2 id="语法基本规则"><a href="#语法基本规则" class="headerlink" title="语法基本规则"></a>语法基本规则</h2><ul>
-<li><input disabled="" type="checkbox"> 变量用**${}**方式取值，但在IF语句中直接使用变量名</li>
-<li><input disabled="" type="checkbox"> 指令(参数1 参数2……)参数用括弧括起，参数之间用<strong>空格</strong>或者<strong>分号</strong>分开</li>
-<li><input disabled="" type="checkbox"> 指令是大小写无关的，参数反之</li>
+<p><strong>欧几里得算法</strong><br>$$<br>gcd(m,n)=gcd(n,m%n)<br>$$</p>
+<p>$$<br>gcd(m,0)=m<br>$$</p>
+<p>中学时计算gcd(m,n)的连续整数检测算法</p>
+<p>……</p>
+<p><strong>埃拉托色尼筛选法</strong></p>
+<p>产生一个不大于给定整数n的连续质数序列。</p>
+<ul>
+<li>初始化一个2~n的连续整数序列，作为候选质数；</li>
+<li>在算法的第一个循环中，将2的倍数从序列中消去。</li>
+<li>只想列表中的下一个数字3，将3的倍数消去；</li>
+<li>下一步处理5和5的倍数（4以及被消去），不断重复，直到没有可以消除的元素</li>
 </ul>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>当源文件名中含有空格时，必须加双引号<br>如：<br>SET(SRC_LIST “mai n.cpp”)<br>ADD_EXECUTABLE(hello main)可以不写后缀，但不推荐</p>
-<h2 id="内部构建与外部构建"><a href="#内部构建与外部构建" class="headerlink" title="内部构建与外部构建"></a>内部构建与外部构建</h2><p>内部构建产生的临时文件多，不方便清理；<br>外部构建就是把生成的临时文件放在build目录下，不会对源文件产生任何影响，推荐使用；</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25</span><br><span class="line">2 3   5   7   9    11    13    15    17    19    21    23    25</span><br><span class="line">2 3   5   7        11    13          17    19          23    25</span><br><span class="line">2 3   5   7        11    13          17    19          23</span><br></pre></td></tr></table></figure>
 
+<p>如果在当前步骤中，我们正在消去p的倍数，那么第一个值得考虑的倍数是pxp，因为其更小的倍数1xp，2xp，……，(p-1)xp以及消除</p>
+<h3 id="1-2-算法问题基础"><a href="#1-2-算法问题基础" class="headerlink" title="1.2 算法问题基础"></a>1.2 算法问题基础</h3><p>可以认为算法是问题的程序化解决方案。</p>
+<p>……</p>
+<h2 id="算法效率分析基础"><a href="#算法效率分析基础" class="headerlink" title="算法效率分析基础"></a>算法效率分析基础</h2>
       
     </div>
       

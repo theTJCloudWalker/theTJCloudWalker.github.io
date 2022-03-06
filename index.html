@@ -51,6 +51,61 @@
     <header>
       
   
+    <h1 class="title"><a href="/2022/03/06/算法设计与分析/">算法设计与分析</a></h1>
+  
+
+      
+        <time datetime="2022-03-06T02:47:07.000Z">2022-03-06</time>
+      
+    </header>
+    <div class="entry">
+      
+        <h1 id="Algorithmics"><a href="#Algorithmics" class="headerlink" title="Algorithmics"></a>Algorithmics</h1><h2 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h2><h3 id="1-1-什么是算法"><a href="#1-1-什么是算法" class="headerlink" title="1.1 什么是算法"></a>1.1 什么是算法</h3><p><strong>算法</strong>是一系列解决问题的明确指令，也就是说，对于符合一定规范的输入，能够在有限时间内获得要求的输出。</p>
+<ul>
+<li>算法的每一个步骤都必须没有歧义，不能有半点含糊。</li>
+<li>必须认真确定算法所处理的输入的值域。</li>
+<li>同一算法可以用几种不同的形式来描述。</li>
+<li>同一问题，可能存在几种不同的算法。</li>
+<li>针对同一问题的算法可能基于完全不同的解题思路。</li>
+</ul>
+<p><strong>欧几里得算法</strong><br>$$<br>gcd(m,n)=gcd(n,m%n)<br>$$</p>
+<p>$$<br>gcd(m,0)=m<br>$$</p>
+<p>中学时计算gcd(m,n)的连续整数检测算法</p>
+<p>……</p>
+<p><strong>埃拉托色尼筛选法</strong></p>
+<p>产生一个不大于给定整数n的连续质数序列。</p>
+<ul>
+<li>初始化一个2~n的连续整数序列，作为候选质数；</li>
+<li>在算法的第一个循环中，将2的倍数从序列中消去。</li>
+<li>只想列表中的下一个数字3，将3的倍数消去；</li>
+<li>下一步处理5和5的倍数（4以及被消去），不断重复，直到没有可以消除的元素</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25</span><br><span class="line">2 3   5   7   9    11    13    15    17    19    21    23    25</span><br><span class="line">2 3   5   7        11    13          17    19          23    25</span><br><span class="line">2 3   5   7        11    13          17    19          23</span><br></pre></td></tr></table></figure>
+
+<p>如果在当前步骤中，我们正在消去p的倍数，那么第一个值得考虑的倍数是pxp，因为其更小的倍数1xp，2xp，……，(p-1)xp以及消除</p>
+<h3 id="1-2-算法问题基础"><a href="#1-2-算法问题基础" class="headerlink" title="1.2 算法问题基础"></a>1.2 算法问题基础</h3><p>可以认为算法是问题的程序化解决方案。</p>
+<p>……</p>
+<h2 id="算法效率分析基础"><a href="#算法效率分析基础" class="headerlink" title="算法效率分析基础"></a>算法效率分析基础</h2>
+      
+    </div>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  <div class="post-content">
+    <header>
+      
+  
     <h1 class="title"><a href="/2022/03/05/databaseNote/">databaseNote</a></h1>
   
 
@@ -319,87 +374,6 @@ $$
     <header>
       
   
-    <h1 class="title"><a href="/2021/12/10/在CentOS服务器上编译期末项目文件/">在CentOS服务器上编译期末项目文件</a></h1>
-  
-
-      
-        <time datetime="2021-12-10T02:40:28.000Z">2021-12-10</time>
-      
-    </header>
-    <div class="entry">
-      
-        <h1 id="在CentOS服务器上编译期末项目文件"><a href="#在CentOS服务器上编译期末项目文件" class="headerlink" title="在CentOS服务器上编译期末项目文件"></a>在CentOS服务器上编译期末项目文件</h1><h2 id="事前准备"><a href="#事前准备" class="headerlink" title="事前准备"></a>事前准备</h2><ul>
-<li>账户以及密码；</li>
-<li>Putty、terminal、shell三选一；</li>
-<li>WinSCP；</li>
-<li>vscode以及插件C/C++ Project Generator(推荐)</li>
-</ul>
-<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="登录服务器"><a href="#登录服务器" class="headerlink" title="登录服务器"></a>登录服务器</h3><ul>
-<li>在terminal和shell里登陆时使用命令：</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh admin@150.158.80.33</span><br><span class="line"># admin是要登陆的用户名</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>按照提示输入密码即可；</p>
-</blockquote>
-<p><strong>登录示例</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> C:\Users\Li Hua&gt;ssh root@150.158.80.33</span><br><span class="line">root@150.158.80.33&#x27;s password:</span><br><span class="line">Activate the web console with: systemctl enable --now cockpit.socket</span><br><span class="line"></span><br><span class="line">Last login: Fri Dec 17 11:17:33 2021 from 111.187.8.131</span><br><span class="line">[oh-my-zsh] Random theme &#x27;gnzh&#x27; loaded</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>使用putty和WinSCP登陆时，host为150.158.80.33；</li>
-</ul>
-<h3 id="上传项目到服务器"><a href="#上传项目到服务器" class="headerlink" title="上传项目到服务器"></a>上传项目到服务器</h3><ul>
-<li>借助WinSCP；</li>
-</ul>
-<h3 id="编译项目"><a href="#编译项目" class="headerlink" title="编译项目"></a>编译项目</h3><p>编译方法千千万，这里给出一种：</p>
-<ul>
-<li><p>借助vscode的C/C++ Project Generator新建项目，将原项目重构；</p>
-<p>其结构如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">root@VM-16-17-centos:~/code</span><br><span class="line">$ cd Problem1</span><br><span class="line"></span><br><span class="line">root@VM-16-17-centos:~/code/Problem1</span><br><span class="line">$ tree</span><br><span class="line">.</span><br><span class="line">├── include</span><br><span class="line">│   ├── Examinee.h</span><br><span class="line">│   └── SinglyLinkedList.h</span><br><span class="line">├── lib</span><br><span class="line">├── Makefile</span><br><span class="line">├── output</span><br><span class="line">│   ├── data.txt</span><br><span class="line">│   └── main</span><br><span class="line">└── src</span><br><span class="line">    ├── main.cpp</span><br><span class="line">    └── main.o</span><br><span class="line"></span><br><span class="line">4 directories, 7 files</span><br></pre></td></tr></table></figure>
-
-<p><em><strong>简单来说就是在新建的空项目中，删除自动生成的main.cpp，将头文件放入include文件夹，cpp文件放入src文件夹；</strong></em></p>
-</li>
-<li><p>将用C/C++ Project Generator生成的项目文件夹上传到服务器；</p>
-<p>这一步使用WinSCP；</p>
-</li>
-<li><p>进入项目文件夹；</p>
-<p>进入文件夹使用cd命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@VM-16-17-centos:~/code</span><br><span class="line">$ ls # ls命令用于查看该目录下可见的文件以及文件夹</span><br><span class="line">coding  Graph  Heap  leetcode  Problem1  Problem10  Problem2  Problem3  Problem4  Problem5  Problem6  Problem7  Problem8  Problem9  test  Tree</span><br><span class="line"></span><br><span class="line">root@VM-16-17-centos:~/code</span><br><span class="line">$ cd Problem1 # 进入Problem1文件夹</span><br><span class="line"></span><br><span class="line">root@VM-16-17-centos:~/code/Problem1</span><br><span class="line">$ ls # 查看Problem1文件夹的可见内容</span><br><span class="line">include  lib  Makefile  output  src</span><br></pre></td></tr></table></figure></li>
-<li><p>gcc环境和cmake环境已经安装，使用以下命令查看:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -v</span><br><span class="line">cmake --version</span><br></pre></td></tr></table></figure></li>
-<li><p>借助C/C++ Project Generator给出的makefile文件，可以使用make命令编译项目：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
-
-<p>示例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@VM-16-17-centos:~/code/Problem1</span><br><span class="line">[130] $ make                                                                                                   </span><br><span class="line">g++ -std=c++11 -Wall -Wextra -g -Iinclude -o output/main src/main.o  -Llib</span><br><span class="line">Executing all complete! # 看到此句说明编译成功</span><br></pre></td></tr></table></figure>
-
-<p>生成的.o可执行文件在output文件夹下，先进入该目录，然后执行：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">root@VM-16-17-centos:~/code/Problem1</span><br><span class="line">$ cd output</span><br><span class="line"></span><br><span class="line">root@VM-16-17-centos:~/code/Problem1/output</span><br><span class="line">$ ls</span><br><span class="line">data.txt  main</span><br><span class="line"></span><br><span class="line">root@VM-16-17-centos:~/code/Problem1/output</span><br><span class="line">$ ./main</span><br><span class="line">sh: chcp: command not found</span><br><span class="line">#1 1    stu1      女       20   软件设计师</span><br><span class="line">#2 2    stu2      男       21   软件开发师</span><br><span class="line">#3 3    stu3      男       20   软件设计师</span><br><span class="line">#4 4    stu4      女       21   软件设计师</span><br><span class="line">#5 5    stu5      男       25   软件开发师</span><br><span class="line">#6 6    stu6      男       24   软件设计师</span><br><span class="line"></span><br><span class="line">请选择您要进行的操作（1为插入，2为删除，3为查找，4为修改，5为统计，0为取消操作）.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><em><strong>使用WinSCP将生成的可执行文件下载到本地即可</strong></em></p>
-</li>
-</ul>
-
-      
-    </div>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-      </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  <div class="post-content">
-    <header>
-      
-  
     <h1 class="title"><a href="/2021/12/10/如何编写makefile详解/">如何编写makefile详解</a></h1>
   
 
@@ -501,6 +475,87 @@ $$
 
 
 
+  <article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2021/12/10/在CentOS服务器上编译期末项目文件/">在CentOS服务器上编译期末项目文件</a></h1>
+  
+
+      
+        <time datetime="2021-12-10T02:40:28.000Z">2021-12-10</time>
+      
+    </header>
+    <div class="entry">
+      
+        <h1 id="在CentOS服务器上编译期末项目文件"><a href="#在CentOS服务器上编译期末项目文件" class="headerlink" title="在CentOS服务器上编译期末项目文件"></a>在CentOS服务器上编译期末项目文件</h1><h2 id="事前准备"><a href="#事前准备" class="headerlink" title="事前准备"></a>事前准备</h2><ul>
+<li>账户以及密码；</li>
+<li>Putty、terminal、shell三选一；</li>
+<li>WinSCP；</li>
+<li>vscode以及插件C/C++ Project Generator(推荐)</li>
+</ul>
+<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="登录服务器"><a href="#登录服务器" class="headerlink" title="登录服务器"></a>登录服务器</h3><ul>
+<li>在terminal和shell里登陆时使用命令：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh admin@150.158.80.33</span><br><span class="line"># admin是要登陆的用户名</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>按照提示输入密码即可；</p>
+</blockquote>
+<p><strong>登录示例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> C:\Users\Li Hua&gt;ssh root@150.158.80.33</span><br><span class="line">root@150.158.80.33&#x27;s password:</span><br><span class="line">Activate the web console with: systemctl enable --now cockpit.socket</span><br><span class="line"></span><br><span class="line">Last login: Fri Dec 17 11:17:33 2021 from 111.187.8.131</span><br><span class="line">[oh-my-zsh] Random theme &#x27;gnzh&#x27; loaded</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用putty和WinSCP登陆时，host为150.158.80.33；</li>
+</ul>
+<h3 id="上传项目到服务器"><a href="#上传项目到服务器" class="headerlink" title="上传项目到服务器"></a>上传项目到服务器</h3><ul>
+<li>借助WinSCP；</li>
+</ul>
+<h3 id="编译项目"><a href="#编译项目" class="headerlink" title="编译项目"></a>编译项目</h3><p>编译方法千千万，这里给出一种：</p>
+<ul>
+<li><p>借助vscode的C/C++ Project Generator新建项目，将原项目重构；</p>
+<p>其结构如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">root@VM-16-17-centos:~/code</span><br><span class="line">$ cd Problem1</span><br><span class="line"></span><br><span class="line">root@VM-16-17-centos:~/code/Problem1</span><br><span class="line">$ tree</span><br><span class="line">.</span><br><span class="line">├── include</span><br><span class="line">│   ├── Examinee.h</span><br><span class="line">│   └── SinglyLinkedList.h</span><br><span class="line">├── lib</span><br><span class="line">├── Makefile</span><br><span class="line">├── output</span><br><span class="line">│   ├── data.txt</span><br><span class="line">│   └── main</span><br><span class="line">└── src</span><br><span class="line">    ├── main.cpp</span><br><span class="line">    └── main.o</span><br><span class="line"></span><br><span class="line">4 directories, 7 files</span><br></pre></td></tr></table></figure>
+
+<p><em><strong>简单来说就是在新建的空项目中，删除自动生成的main.cpp，将头文件放入include文件夹，cpp文件放入src文件夹；</strong></em></p>
+</li>
+<li><p>将用C/C++ Project Generator生成的项目文件夹上传到服务器；</p>
+<p>这一步使用WinSCP；</p>
+</li>
+<li><p>进入项目文件夹；</p>
+<p>进入文件夹使用cd命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@VM-16-17-centos:~/code</span><br><span class="line">$ ls # ls命令用于查看该目录下可见的文件以及文件夹</span><br><span class="line">coding  Graph  Heap  leetcode  Problem1  Problem10  Problem2  Problem3  Problem4  Problem5  Problem6  Problem7  Problem8  Problem9  test  Tree</span><br><span class="line"></span><br><span class="line">root@VM-16-17-centos:~/code</span><br><span class="line">$ cd Problem1 # 进入Problem1文件夹</span><br><span class="line"></span><br><span class="line">root@VM-16-17-centos:~/code/Problem1</span><br><span class="line">$ ls # 查看Problem1文件夹的可见内容</span><br><span class="line">include  lib  Makefile  output  src</span><br></pre></td></tr></table></figure></li>
+<li><p>gcc环境和cmake环境已经安装，使用以下命令查看:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -v</span><br><span class="line">cmake --version</span><br></pre></td></tr></table></figure></li>
+<li><p>借助C/C++ Project Generator给出的makefile文件，可以使用make命令编译项目：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@VM-16-17-centos:~/code/Problem1</span><br><span class="line">[130] $ make                                                                                                   </span><br><span class="line">g++ -std=c++11 -Wall -Wextra -g -Iinclude -o output/main src/main.o  -Llib</span><br><span class="line">Executing all complete! # 看到此句说明编译成功</span><br></pre></td></tr></table></figure>
+
+<p>生成的.o可执行文件在output文件夹下，先进入该目录，然后执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">root@VM-16-17-centos:~/code/Problem1</span><br><span class="line">$ cd output</span><br><span class="line"></span><br><span class="line">root@VM-16-17-centos:~/code/Problem1/output</span><br><span class="line">$ ls</span><br><span class="line">data.txt  main</span><br><span class="line"></span><br><span class="line">root@VM-16-17-centos:~/code/Problem1/output</span><br><span class="line">$ ./main</span><br><span class="line">sh: chcp: command not found</span><br><span class="line">#1 1    stu1      女       20   软件设计师</span><br><span class="line">#2 2    stu2      男       21   软件开发师</span><br><span class="line">#3 3    stu3      男       20   软件设计师</span><br><span class="line">#4 4    stu4      女       21   软件设计师</span><br><span class="line">#5 5    stu5      男       25   软件开发师</span><br><span class="line">#6 6    stu6      男       24   软件设计师</span><br><span class="line"></span><br><span class="line">请选择您要进行的操作（1为插入，2为删除，3为查找，4为修改，5为统计，0为取消操作）.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><em><strong>使用WinSCP将生成的可执行文件下载到本地即可</strong></em></p>
+</li>
+</ul>
+
+      
+    </div>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
+</article>
+
+
+
+
+
 
 <nav id="pagination">
   
@@ -521,6 +576,10 @@ $$
   <ul class="entry">
     
       <li>
+        <a href="/2022/03/06/算法设计与分析/">算法设计与分析</a>
+      </li>
+    
+      <li>
         <a href="/2022/03/05/databaseNote/">databaseNote</a>
       </li>
     
@@ -534,10 +593,6 @@ $$
     
       <li>
         <a href="/2022/01/30/cmake语法/">cmake语法</a>
-      </li>
-    
-      <li>
-        <a href="/2021/12/10/在CentOS服务器上编译期末项目文件/">在CentOS服务器上编译期末项目文件</a>
       </li>
     
   </ul>
