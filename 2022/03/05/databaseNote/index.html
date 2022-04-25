@@ -172,13 +172,110 @@ $$
 
 <h3 id="3-3-SQL查询的基本结构"><a href="#3-3-SQL查询的基本结构" class="headerlink" title="3.3 SQL查询的基本结构"></a>3.3 SQL查询的基本结构</h3><h4 id="3-3-1-单关系查询"><a href="#3-3-1-单关系查询" class="headerlink" title="3.3.1 单关系查询"></a>3.3.1 单关系查询</h4><p>select distinct可以去除重复</p>
 <p>all为缺省选项</p>
-<h2 id="Chapter4-中级SQL"><a href="#Chapter4-中级SQL" class="headerlink" title="Chapter4 中级SQL"></a>Chapter4 中级SQL</h2><h3 id="4-1-连接表达式"><a href="#4-1-连接表达式" class="headerlink" title="4.1 连接表达式"></a>4.1 连接表达式</h3><h4 id="4-1-1-自然连接"><a href="#4-1-1-自然连接" class="headerlink" title="4.1.1 自然连接"></a>4.1.1 自然连接</h4><p>自然连接运算作用于两个关系，并产生一个关系作为结果。与两个关系的笛卡尔积不同，自然连接只考虑在两个关系的模式中都出现的那些属性上的取值相同的元组对。</p>
+<h2 id="Chapter4-中级SQL"><a href="#Chapter4-中级SQL" class="headerlink" title="Chapter4 中级SQL"></a>Chapter4 中级SQL</h2><h3 id="4-1-连接表达式"><a href="#4-1-连接表达式" class="headerlink" title="4.1 连接表达式"></a>4.1 连接表达式</h3><p><strong>Join operations</strong> take two relations and return as a result another relation.</p>
+<p>三种连接：</p>
+<ul>
+<li>Natural join</li>
+<li>Inner join</li>
+<li>Outer join</li>
+</ul>
+<h4 id="4-1-1-自然连接"><a href="#4-1-1-自然连接" class="headerlink" title="4.1.1 自然连接"></a>4.1.1 自然连接</h4><p>自然连接运算作用于两个关系，并产生一个关系作为结果。与两个关系的笛卡尔积不同，自然连接只考虑在两个关系的模式中都出现的那些属性上的取值相同的元组对。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select name,course_id</span><br><span class="line">from student,takes</span><br><span class="line">where student.ID=takes.ID;</span><br></pre></td></tr></table></figure>
 
 <p>等同于</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select name,course_id</span><br><span class="line">from student natural join;</span><br></pre></td></tr></table></figure>
 
+<p>   from 后可以跟多个结合的Natual join</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select  A1, A2, … An</span><br><span class="line">from  r1  natural join r2 natural join .. natural join rn</span><br><span class="line">where  P ;</span><br></pre></td></tr></table></figure>
 
+<p>需要注意的是，unrelated attributes with same name which get equated incorrectly</p>
+<p>不相关的同名属性回到是自然连接错误</p>
+<p>§Example – List the names of students instructors along with the titles of courses that they have taken</p>
+<p>•Correct version</p>
+<p>​      <strong>select</strong> <em>name</em>, title<br>​     <strong>from</strong> <em>student</em> <strong>natural join</strong> <em>takes</em>, course<br>​     <strong>where</strong> <em>takes</em>.<em>course_id</em> = <em>course</em>.<em>course_id</em>;</p>
+<p>•Incorrect version</p>
+<p>​    <strong>select</strong> <em>name</em>, title<br>  <strong>from</strong> <em>student</em> <strong>natural join</strong> <em>takes</em> <strong>natural join</strong> <em>course</em>;</p>
+<p>This query omits all (student name, course title) pairs where the student takes a course in a department other than the student’s own department. </p>
+<p>The correct version (above), correctly outputs such pairs.</p>
+<p>为了避免上面提到的情形，可以用using 语句指明匹配的属性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select name, title</span><br><span class="line">from  (student natural join takes)  join course using (course_id)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>The <strong>on</strong>  condition allows a general predicate over the relations being joined</p>
+<p>This predicate is written like a <strong>where</strong> clause predicate except for the use of the keyword <strong>on</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select *</span><br><span class="line">from  student join takes on student_ID  = takes_ID</span><br></pre></td></tr></table></figure>
+
+<p>Equivalent to:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select *</span><br><span class="line">from  student , takes </span><br><span class="line">where  student_ID  = takes_ID</span><br></pre></td></tr></table></figure>
+
+<pre><code>#### Outer Join
+</code></pre>
+<p>An extension of the join operation that avoids loss of information</p>
+<p>三种外部连接：</p>
+<ul>
+<li>left outer join</li>
+<li>right outer join</li>
+<li>full outer join</li>
+</ul>
+<p><strong>join types:</strong></p>
+<p>inner join</p>
+<p>left outer join</p>
+<p>right outer join</p>
+<p>full outer join </p>
+<p><strong>Join Conditions:</strong></p>
+<p>natural</p>
+<p>on <predicate></p>
+<p>using (A1,A2,……,An)</p>
+<p>A <strong>view</strong> provides a mechanism to hide certain data from the view of certain users. </p>
+<p>Any relation that is not of the conceptual model but is made visible to a user as a “virtual relation” is called a <strong>view</strong>.</p>
+<p>A view is defined using the <strong>create view</strong> statement which has the form</p>
+<p><strong>create view</strong> <em>v</em> <strong>as</strong> *&lt;* query expression &gt;</p>
+<p> where <query expression> is any legal SQL expression. The view name is represented by <em>v.</em></p>
+<p>§Create a view of department salary totals</p>
+<p>  <strong>create view</strong> <strong>departments_total_salary</strong>(dept_name, <strong>total_salary</strong>) as<br>    select <em>dept_name</em>, <strong>sum</strong> (<em>salary</em>)<br>    <strong>from</strong> instructor<br>    <strong>group by</strong> <em>dept_name</em>;</p>
+<p>可以用view来定义另一个view</p>
+<p>物化视图（部分数据库支持）允许存储视图关系</p>
+<p>如果定义视图的查询对下列条件都能满足，那么就称SQL视图是可更新的(即视图上可以执行插入、更新或删除)：</p>
+<ul>
+<li>from子句中只有一个数据库关系</li>
+<li>select子句中只含关系的属性名，并不包含任何表达式、聚集、distinct声明</li>
+<li>没有出现在select子句中的任何属性都可以取null值；也就是说，这些属性没有非空约束，也不构成主码的一部分。</li>
+<li>查询中不含有group by或having子句</li>
+</ul>
+<h3 id="4-3事务"><a href="#4-3事务" class="headerlink" title="4.3事务"></a>4.3事务</h3><p>事务由查询和更新语句的系列组成</p>
+<p>sql标准规定当一条sql语句被执行时，就隐式地开始了一个事务。下列SQL语句之一会结束该事务：</p>
+<ul>
+<li>commit work提交当前事务</li>
+<li>rollback work回滚当前事务</li>
+</ul>
+<h3 id="4-4完整性约束"><a href="#4-4完整性约束" class="headerlink" title="4.4完整性约束"></a>4.4完整性约束</h3><h4 id="4-4-1单个关系上的约束"><a href="#4-4-1单个关系上的约束" class="headerlink" title="4.4.1单个关系上的约束"></a>4.4.1单个关系上的约束</h4><p>允许的完整性约束：</p>
+<ul>
+<li>not null</li>
+<li>unique</li>
+<li>check(&lt;谓词&gt;)</li>
+</ul>
+<h4 id="4-4-2非空约束"><a href="#4-4-2非空约束" class="headerlink" title="4.4.2非空约束"></a>4.4.2非空约束</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name varchar(20)not null</span><br><span class="line">budget numeric(12,2)not null</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-4-3唯一性约束"><a href="#4-4-3唯一性约束" class="headerlink" title="4.4.3唯一性约束"></a>4.4.3唯一性约束</h4><p>unique(A1,A2,……，An)</p>
+<p>唯一性声明指出属性(A1,A2,……，An)形成了一个超码</p>
+<h4 id="4-4-4check子句"><a href="#4-4-4check子句" class="headerlink" title="4.4.4check子句"></a>4.4.4check子句</h4><p>check(P)子句指定一个谓词P，关系中的每个元组必须满足谓词P</p>
+<p>如果check（）子句不为假，则它是满足的</p>
+<h4 id="4-4-5引用完整性"><a href="#4-4-5引用完整性" class="headerlink" title="4.4.5引用完整性"></a>4.4.5引用完整性</h4><p>一个关系中给定属性集合的取值也在另一个关系的特定属性集的取值中出现，这种情况称为引用完整性约束，<strong>外码</strong>是引用完整性约束的一种方式，其中被引用的属性构成被引用关系的主码。</p>
+<p>通过使用外码子句，可以将外码指定为SQL的创建表的语句的一部分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">foreign key(dept_name)reference department</span><br></pre></td></tr></table></figure>
+
+<p>表明：对于每个课程元组，元组中指定的系名必须在department关系中存在。如果没有这个约束，就可能会为一门课程指定一个并不存在的系名</p>
+<p>缺省情况下，在SQL中外码引用的是被引用表的主码属性。</p>
+<p>sql还支持一个可以显式指定被引用关系的属性列表的引用子句的版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">foreign key(dept_name) references department(dept_name)</span><br></pre></td></tr></table></figure>
+
+<p>定义写作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dept_name varchar(20) references department</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-4-6给约束赋名"><a href="#4-4-6给约束赋名" class="headerlink" title="4.4.6给约束赋名"></a>4.4.6给约束赋名</h4><p>为了命名约束，我们在约束前面使用关键字constraint和我们希望为其赋予的名称。</p>
+<p>example：</p>
+<p>将名称minsalary赋给instructor的salary属性上的check约束，那么可以对salary的声明修改为：</p>
+<p>salary numeric(8,2)，constraint minsalary check（salary&gt;29000）</p>
+<h4 id="4-4-7事务中对完整性约束的违反"><a href="#4-4-7事务中对完整性约束的违反" class="headerlink" title="4.4.7事务中对完整性约束的违反"></a>4.4.7事务中对完整性约束的违反</h4><h4 id="4-4-8复杂check与断言"><a href="#4-4-8复杂check与断言" class="headerlink" title="4.4.8复杂check与断言"></a>4.4.8复杂check与断言</h4><h3 id="4-5-SQL的数据类型与模式"><a href="#4-5-SQL的数据类型与模式" class="headerlink" title="4.5 SQL的数据类型与模式"></a>4.5 SQL的数据类型与模式</h3>
       
     </div>
       
@@ -230,6 +327,10 @@ $$
   <ul class="entry">
     
       <li>
+        <a href="/2022/04/25/loginInOracle/">loginInOracle</a>
+      </li>
+    
+      <li>
         <a href="/2022/03/18/ComputerArchitecture/">ComputerArchitecture</a>
       </li>
     
@@ -243,10 +344,6 @@ $$
     
       <li>
         <a href="/2022/03/02/Failed-to-initialize-toolbox-jvm-application一种解决方案/">Failed to initialize toolbox jvm application一种解决方案</a>
-      </li>
-    
-      <li>
-        <a href="/2022/02/13/hello-world/">Hello World</a>
       </li>
     
   </ul>
