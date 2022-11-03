@@ -8,15 +8,19 @@
   <meta name="renderer" content="webkit">
 
   
-  <title>归档: 2022 | 行走就是圆梦，回去亦是前行</title>
+  <title>docker部署mysql5.7 | 行走就是圆梦，回去亦是前行</title>
 
   <link rel="shortcut icon" href="/images/favicon.png">
   <link rel="alternate" href="/atom.xml" title="行走就是圆梦，回去亦是前行" type="application/atom+xml">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="行走就是圆梦，回去亦是前行">
-<meta property="og:url" content="http://tjcloudwalker.top/archives/2022/index.html">
+  <meta name="description" content="在ubuntu20.04上用docker部署MySQL5.7dockers部署mysql1.拉取mysqldocker pull mysql:5.7  2.查看镜像docker images  3.启动MySQL容器udo docker run --name mysql5.7-p 3306:3306 -e MYSQL_ROOT_PASSWORD&#x3D;123456 -d mysql:5.7  4.登录容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker部署mysql5.7">
+<meta property="og:url" content="http://tjcloudwalker.top/2022/11/03/docker%E9%83%A8%E7%BD%B2mysql5-7/index.html">
 <meta property="og:site_name" content="行走就是圆梦，回去亦是前行">
+<meta property="og:description" content="在ubuntu20.04上用docker部署MySQL5.7dockers部署mysql1.拉取mysqldocker pull mysql:5.7  2.查看镜像docker images  3.启动MySQL容器udo docker run --name mysql5.7-p 3306:3306 -e MYSQL_ROOT_PASSWORD&#x3D;123456 -d mysql:5.7  4.登录容">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-03T15:09:47.000Z">
+<meta property="article:modified_time" content="2022-11-03T15:39:32.069Z">
 <meta property="article:author" content="TJCloudWalker">
 <meta name="twitter:card" content="summary">
 
@@ -26,7 +30,7 @@
 
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="application-name" content="行走就是圆梦，回去亦是前行">
-  <meta name="msapplication-starturl" content="http://tjcloudwalker.top/archives/2022/">
+  <meta name="msapplication-starturl" content="http://tjcloudwalker.top/2022/11/03/docker%E9%83%A8%E7%BD%B2mysql5-7/">
   <meta name="msapplication-navbutton-color" content="#9C27B0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="行走就是圆梦，回去亦是前行">
@@ -34,7 +38,7 @@
   <link rel="apple-touch-icon" href="/images/favicon.png">
 
   
-    <link rel="canonical" href="http://tjcloudwalker.top/archives/2022/index.html">
+    <link rel="canonical" href="http://tjcloudwalker.top/2022/11/03/docker%E9%83%A8%E7%BD%B2mysql5-7/">
   
 
   
@@ -166,97 +170,110 @@
 </aside>
 
   <main id="main" class="mdui-m-t-5 fadeIn animated">
+  
+<link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
 
-  <div class="mdui-chip mdui-m-b-3">
-    <span class="mdui-chip-icon mdui-color-theme-accent"><i class="mdui-icon material-icons">place</i></span>
-    <span class="mdui-chip-title">归档：2022/</span>
-  </div>
-
-
-
-
-  <article class="mdui-card mdui-m-b-5 mdui-hoverable">
-    <a href="/2022/11/03/docker%E9%83%A8%E7%BD%B2mysql5-7/">
-      <header class="mdui-card-media mdui-ripple">
-        <img src="/images/random/material-1.png" style="max-height: 240px;">
-        <div class="mdui-card-media-covered">
-          <div class="mdui-card-primary">
-            <div class="mdui-card-primary-title">docker部署mysql5.7</div>
-            <div class="mdui-card-primary-subtitle"><i class="iconfont">&#xe697;</i> 2022-11-03 / <i class="iconfont">&#xe601;</i> TJCloudWalker</div>
-          </div>
+  <style>#main article .mdui-card-content .center-block{display:block!important;margin-right:auto!important;margin-left:auto!important}</style>
+  <style>#main article .mdui-card-content .text-center{text-align:center!important}</style>
+  <article class="mdui-card mdui-m-b-5">
+    <header class="mdui-card-media">
+      <img src="/images/random/material-9.png" style="max-height: 240px;">
+      <div class="mdui-card-media-covered">
+        <div class="mdui-card-primary">
+          <div class="mdui-card-primary-title">docker部署mysql5.7</div>
+          <div class="mdui-card-primary-subtitle"><i class="iconfont">&#xe697;</i> 2022-11-03 / <i class="iconfont">&#xe601;</i> TJCloudWalker</div>
         </div>
+      </div>
+      <div class="mdui-card-menu">
         
-      </header>
-    </a>
+          <button class="mdui-btn mdui-btn-icon mdui-text-color-white" mdui-menu="{target: '#qrcode', align: 'right'}"><i class="mdui-icon material-icons">devices</i></button>
+          <ul class="mdui-menu" id="qrcode">
+            
+              <li class="mdui-menu-item"><a class="mdui-text-center mdui-ripple">发送到手机</a></li>
+            
+            <li class="mdui-menu-item" disabled>
+              
+                <img src="//qr.liantu.com/api.php?w=246&m=10&text=http://tjcloudwalker.top/2022/11/03/docker%E9%83%A8%E7%BD%B2mysql5-7/">
+              
+            </li>
+          </ul>
+        
+        
+          <button class="mdui-btn mdui-btn-icon mdui-text-color-white" mdui-menu="{target: '#share_menu', align: 'right'}"><i class="mdui-icon material-icons">share</i></button>
+          <ul class="mdui-menu" id="share_menu">
+            <li class="mdui-menu-item">
+              <a href="https://service.weibo.com/share/share.php?appkey=&title=docker部署mysql5.7&url=http://tjcloudwalker.top/2022/11/03/docker%E9%83%A8%E7%BD%B2mysql5-7/&pic=http://tjcloudwalker.top/images/favicon.png&searchPic=false&style=simple" target="_blank" class="mdui-ripple">分享到 Weibo</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://twitter.com/intent/tweet?text=docker部署mysql5.7&url=http://tjcloudwalker.top/2022/11/03/docker%E9%83%A8%E7%BD%B2mysql5-7/&via=TJCloudWalker" target="_blank" class="mdui-ripple">分享到 Twitter</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://www.facebook.com/sharer/sharer.php?u=http://tjcloudwalker.top/2022/11/03/docker%E9%83%A8%E7%BD%B2mysql5-7/" target="_blank" class="mdui-ripple">分享到 Facebook</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://plus.google.com/share?url=http://tjcloudwalker.top/2022/11/03/docker%E9%83%A8%E7%BD%B2mysql5-7/" target="_blank" class="mdui-ripple">分享到 Google+</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://tjcloudwalker.top/2022/11/03/docker%E9%83%A8%E7%BD%B2mysql5-7/&title=docker部署mysql5.7" target="_blank" class="mdui-ripple">分享到 LinkedIn</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://connect.qq.com/widget/shareqq/index.html?site=行走就是圆梦，回去亦是前行&title=docker部署mysql5.7&pics=http://tjcloudwalker.top/images/favicon.png&url=http://tjcloudwalker.top/2022/11/03/docker%E9%83%A8%E7%BD%B2mysql5-7/" target="_blank" class="mdui-ripple">分享到 QQ</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://telegram.me/share/url?url=http://tjcloudwalker.top/2022/11/03/docker%E9%83%A8%E7%BD%B2mysql5-7/&text=docker部署mysql5.7" target="_blank" class="mdui-ripple">分享到 Telegram</a>
+            </li>
+          </ul>
+        
+      </div>
+    </header>
     <div class="mdui-card-content mdui-typo">
+      <h1 id="在ubuntu20-04上用docker部署MySQL5-7"><a href="#在ubuntu20-04上用docker部署MySQL5-7" class="headerlink" title="在ubuntu20.04上用docker部署MySQL5.7"></a>在ubuntu20.04上用docker部署MySQL5.7</h1><h2 id="dockers部署mysql"><a href="#dockers部署mysql" class="headerlink" title="dockers部署mysql"></a>dockers部署mysql</h2><h3 id="1-拉取mysql"><a href="#1-拉取mysql" class="headerlink" title="1.拉取mysql"></a>1.拉取mysql</h3><pre><code>docker pull mysql:5.7
+</code></pre>
+<h3 id="2-查看镜像"><a href="#2-查看镜像" class="headerlink" title="2.查看镜像"></a>2.查看镜像</h3><pre><code>docker images
+</code></pre>
+<h3 id="3-启动MySQL容器"><a href="#3-启动MySQL容器" class="headerlink" title="3.启动MySQL容器"></a>3.启动MySQL容器</h3><pre><code>udo docker run --name mysql5.7-p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
+</code></pre>
+<h3 id="4-登录容器"><a href="#4-登录容器" class="headerlink" title="4.登录容器"></a>4.登录容器</h3><pre><code>docker exec -it my-mysql bash
+</code></pre>
+<h3 id="5-登录mysql"><a href="#5-登录mysql" class="headerlink" title="5.登录mysql"></a>5.登录mysql</h3><pre><code>mysql -uroot -p 
+</code></pre>
+<p>用之前的密码登录</p>
+<p>一些有用的链接</p>
+<p><a href="%5B(76%E6%9D%A1%E6%B6%88%E6%81%AF">docker部署mysql</a> 使用Docker部署MySQL_满眼清香的博客-CSDN博客_docker mysql](<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44037416/article/details/117956869?ops_request_misc=%7B%22request_id%22:%22166748841616782412511501%22,%22scm%22:%2220140713.130102334..%22%7D&amp;request_id=166748841616782412511501&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-2-117956869-null-null.142%5Ev63%5Ewechat,201%5Ev3%5Econtrol_1,213%5Ev1%5Econtrol&amp;utm_term=docker%E9%83%A8%E7%BD%B2mysql&amp;spm=1018.2226.3001.4187">https://blog.csdn.net/weixin_44037416/article/details/117956869?ops_request_misc=%7B%22request%5Fid%22%3A%22166748841616782412511501%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=166748841616782412511501&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-2-117956869-null-null.142^v63^wechat,201^v3^control_1,213^v1^control&amp;utm_term=docker部署mysql&amp;spm=1018.2226.3001.4187</a>))</p>
+<p>[navicat安装](<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/492364793">Navicat 16 最新版Windows安装与永久激活教程 - 知乎 (zhihu.com)</a>)</p>
+<p><a href="%5B(76%E6%9D%A1%E6%B6%88%E6%81%AF">mysql新建管理员</a> mysql新建用户并授权管理员_MySQL数据库新建用户与授权方法_王Evey的博客-CSDN博客](<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_35664081/article/details/113168662">https://blog.csdn.net/weixin_35664081/article/details/113168662</a>))</p>
+
       
-        ……
-      
-    </div>
-    <div class="mdui-text-center">
-      <a href="/2022/11/03/docker%E9%83%A8%E7%BD%B2mysql5-7/" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple">阅读全文</a>
+      <blockquote>
+        
+        <strong>本文链接：</strong><br><a href="http://tjcloudwalker.top/2022/11/03/docker%E9%83%A8%E7%BD%B2mysql5-7/">http://tjcloudwalker.top/2022/11/03/docker部署mysql5-7/</a>
+      </blockquote>
     </div>
     <footer class="mdui-card-actions">
       
       
     </footer>
+    
   </article>
+  
+<script src="//cdn.bootcdn.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
-  <article class="mdui-card mdui-m-b-5 mdui-hoverable">
-    <a href="/2022/10/29/flutter%E5%85%A5%E9%97%A8/">
-      <header class="mdui-card-media mdui-ripple">
-        <img src="/images/random/material-2.png" style="max-height: 240px;">
-        <div class="mdui-card-media-covered">
-          <div class="mdui-card-primary">
-            <div class="mdui-card-primary-title">flutter入门</div>
-            <div class="mdui-card-primary-subtitle"><i class="iconfont">&#xe697;</i> 2022-10-29 / <i class="iconfont">&#xe601;</i> TJCloudWalker</div>
-          </div>
-        </div>
-        
-      </header>
-    </a>
-    <div class="mdui-card-content mdui-typo">
-      
-        ...……
-      
-    </div>
-    <div class="mdui-text-center">
-      <a href="/2022/10/29/flutter%E5%85%A5%E9%97%A8/" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple">阅读全文</a>
-    </div>
-    <footer class="mdui-card-actions">
-      
-        <a class="mdui-ripple article_categories-link" href="/categories/UI/">UI</a><a class="mdui-ripple article_categories-link" href="/categories/UI/Flutter/">Flutter</a>
-      
-      
-    </footer>
-  </article>
+  <script>$("#main article .mdui-card-content img.fancybox").on("click",function(e){$.fancybox.open({src:$(this).attr("src")});});</script>
 
-  <article class="mdui-card mdui-m-b-5 mdui-hoverable">
-    <a href="/2022/10/29/hello-world/">
-      <header class="mdui-card-media mdui-ripple">
-        <img src="/images/random/material-7.png" style="max-height: 240px;">
-        <div class="mdui-card-media-covered">
-          <div class="mdui-card-primary">
-            <div class="mdui-card-primary-title">Hello World</div>
-            <div class="mdui-card-primary-subtitle"><i class="iconfont">&#xe697;</i> 2022-10-29 / <i class="iconfont">&#xe601;</i> TJCloudWalker</div>
-          </div>
-        </div>
-        
-      </header>
-    </a>
-    <div class="mdui-card-content mdui-typo">
-      
-        Welcome to Hexo! This is your very first po...……
-      
-    </div>
-    <div class="mdui-text-center">
-      <a href="/2022/10/29/hello-world/" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple">阅读全文</a>
-    </div>
-    <footer class="mdui-card-actions">
-      
-      
-    </footer>
-  </article>
+
+  <nav id="paginator">
+    
+    <div class="spacer"></div>
+    
+      <a rel="next" class="extend next" href="/2022/10/29/flutter%E5%85%A5%E9%97%A8/">
+        <span class="mdui-p-x-3" mdui-tooltip="{content: 'flutter入门'}">下一篇</span>
+        <button aria-label="next" class="mdui-btn mdui-btn-raised mdui-btn-icon mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">arrow_forward</i></button>
+      </a>
+    
+  </nav>
+
+
 
 
 
