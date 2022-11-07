@@ -12,15 +12,15 @@
 
   <link rel="shortcut icon" href="/images/favicon.png">
   <link rel="alternate" href="/atom.xml" title="行走就是圆梦，回去亦是前行" type="application/atom+xml">
-  <meta name="description" content="在ubuntu20.04上用docker部署MySQL5.7dockers部署mysql1.拉取mysqldocker pull mysql:5.7  2.查看镜像docker images  3.启动MySQL容器udo docker run --name mysql5.7-p 3306:3306 -e MYSQL_ROOT_PASSWORD&#x3D;123456 -d mysql:5.7  4.登录容">
+  <meta name="description" content="在ubuntu20.04上用docker部署MySQL5.7dockers部署mysql1.拉取mysqldocker pull mysql:5.7  2.查看镜像docker images  3.启动MySQL容器docker run -p 3306:3306 -d --name mysql -e MYSQL_ROOT_PASSWORD&#x3D;123456 mysql:5.7  4.登录容器docke">
 <meta property="og:type" content="article">
 <meta property="og:title" content="docker部署mysql5.7">
 <meta property="og:url" content="http://tjcloudwalker.top/2022/11/03/docker%E9%83%A8%E7%BD%B2mysql5-7/index.html">
 <meta property="og:site_name" content="行走就是圆梦，回去亦是前行">
-<meta property="og:description" content="在ubuntu20.04上用docker部署MySQL5.7dockers部署mysql1.拉取mysqldocker pull mysql:5.7  2.查看镜像docker images  3.启动MySQL容器udo docker run --name mysql5.7-p 3306:3306 -e MYSQL_ROOT_PASSWORD&#x3D;123456 -d mysql:5.7  4.登录容">
+<meta property="og:description" content="在ubuntu20.04上用docker部署MySQL5.7dockers部署mysql1.拉取mysqldocker pull mysql:5.7  2.查看镜像docker images  3.启动MySQL容器docker run -p 3306:3306 -d --name mysql -e MYSQL_ROOT_PASSWORD&#x3D;123456 mysql:5.7  4.登录容器docke">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-11-03T15:09:47.000Z">
-<meta property="article:modified_time" content="2022-11-03T15:39:32.069Z">
+<meta property="article:modified_time" content="2022-11-06T13:12:13.808Z">
 <meta property="article:author" content="TJCloudWalker">
 <meta name="twitter:card" content="summary">
 
@@ -105,7 +105,7 @@
       </div>
       <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
         
-        <a class="mdui-ripple sidebar_archives-link" href="/archives/2022/11/">十一月 2022<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/archives/2022/10/">十月 2022<span class="mdui-ripple sidebar_archives-count">2</span></a>
+        <a class="mdui-ripple sidebar_archives-link" href="/archives/2022/11/">十一月 2022<span class="mdui-ripple sidebar_archives-count">2</span></a><a class="mdui-ripple sidebar_archives-link" href="/archives/2022/10/">十月 2022<span class="mdui-ripple sidebar_archives-count">2</span></a>
         
       </div>
     </div>
@@ -118,7 +118,7 @@
       </div>
       <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
         
-        <a class="mdui-ripple sidebar_archives-link" href="/categories/UI/">UI<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/categories/UI/Flutter/">Flutter<span class="mdui-ripple sidebar_archives-count">1</span></a>
+        <a class="mdui-ripple sidebar_archives-link" href="/categories/UI/">UI<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/categories/UI/Flutter/">Flutter<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/">redis<span class="mdui-ripple sidebar_archives-count">1</span></a>
         
       </div>
     </div>
@@ -177,7 +177,7 @@
   <style>#main article .mdui-card-content .text-center{text-align:center!important}</style>
   <article class="mdui-card mdui-m-b-5">
     <header class="mdui-card-media">
-      <img src="/images/random/material-9.png" style="max-height: 240px;">
+      <img src="/images/random/material-17.png" style="max-height: 240px;">
       <div class="mdui-card-media-covered">
         <div class="mdui-card-primary">
           <div class="mdui-card-primary-title">docker部署mysql5.7</div>
@@ -231,13 +231,17 @@
 </code></pre>
 <h3 id="2-查看镜像"><a href="#2-查看镜像" class="headerlink" title="2.查看镜像"></a>2.查看镜像</h3><pre><code>docker images
 </code></pre>
-<h3 id="3-启动MySQL容器"><a href="#3-启动MySQL容器" class="headerlink" title="3.启动MySQL容器"></a>3.启动MySQL容器</h3><pre><code>udo docker run --name mysql5.7-p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
+<h3 id="3-启动MySQL容器"><a href="#3-启动MySQL容器" class="headerlink" title="3.启动MySQL容器"></a>3.启动MySQL容器</h3><pre><code>docker run -p 3306:3306 -d --name mysql -e MYSQL_ROOT_PASSWORD=123456 mysql:5.7
 </code></pre>
 <h3 id="4-登录容器"><a href="#4-登录容器" class="headerlink" title="4.登录容器"></a>4.登录容器</h3><pre><code>docker exec -it my-mysql bash
 </code></pre>
 <h3 id="5-登录mysql"><a href="#5-登录mysql" class="headerlink" title="5.登录mysql"></a>5.登录mysql</h3><pre><code>mysql -uroot -p 
 </code></pre>
 <p>用之前的密码登录</p>
+<h2 id="新建管理员"><a href="#新建管理员" class="headerlink" title="新建管理员"></a>新建管理员</h2><pre><code>create user &#39;xxx&#39; @&#39;%&#39; IDENTIFIED by &#39;123456&#39;;
+GRANT all PRIVILEGEs on *.* to &#39;xxx&#39;@&#39;%&#39; IDENTIFIED by &#39;123456&#39;;
+flush PRIVILEGES;
+</code></pre>
 <p>一些有用的链接</p>
 <p><a href="%5B(76%E6%9D%A1%E6%B6%88%E6%81%AF">docker部署mysql</a> 使用Docker部署MySQL_满眼清香的博客-CSDN博客_docker mysql](<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44037416/article/details/117956869?ops_request_misc=%7B%22request_id%22:%22166748841616782412511501%22,%22scm%22:%2220140713.130102334..%22%7D&amp;request_id=166748841616782412511501&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-2-117956869-null-null.142%5Ev63%5Ewechat,201%5Ev3%5Econtrol_1,213%5Ev1%5Econtrol&amp;utm_term=docker%E9%83%A8%E7%BD%B2mysql&amp;spm=1018.2226.3001.4187">https://blog.csdn.net/weixin_44037416/article/details/117956869?ops_request_misc=%7B%22request%5Fid%22%3A%22166748841616782412511501%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=166748841616782412511501&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-2-117956869-null-null.142^v63^wechat,201^v3^control_1,213^v1^control&amp;utm_term=docker部署mysql&amp;spm=1018.2226.3001.4187</a>))</p>
 <p>[navicat安装](<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/492364793">Navicat 16 最新版Windows安装与永久激活教程 - 知乎 (zhihu.com)</a>)</p>
@@ -263,6 +267,11 @@
 
 
   <nav id="paginator">
+    
+      <a rel="prev" class="extend prev" href="/2022/11/07/redis%E5%85%A5%E9%97%A8/">
+        <button aria-label="prev" class="mdui-btn mdui-btn-raised mdui-btn-icon mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">arrow_back</i></button>
+        <span class="mdui-p-x-3" mdui-tooltip="{content: 'redis入门'}">上一篇</span>
+      </a>
     
     <div class="spacer"></div>
     
