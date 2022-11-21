@@ -8,15 +8,19 @@
   <meta name="renderer" content="webkit">
 
   
-  <title>归档: 2022/10 | 行走就是圆梦，回去亦是前行</title>
+  <title>机器码引发的bug | 行走就是圆梦，回去亦是前行</title>
 
   <link rel="shortcut icon" href="/images/favicon.png">
   <link rel="alternate" href="/atom.xml" title="行走就是圆梦，回去亦是前行" type="application/atom+xml">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="行走就是圆梦，回去亦是前行">
-<meta property="og:url" content="http://tjcloudwalker.top/archives/2022/10/index.html">
+  <meta name="description" content="MaixPy系列开发板机器码[教程](获取MaixPy系列开发板机器码——MaixHub 机器码获取 (sipeed.com)) 起初使用教程的机器码下载smodel，运行出现ValueError: [MAIXPY]kpu: load error:2002, ERR_KMODEL_VERSION: only support kmodel V3&#x2F;V4 now错误，其实问题并不在于kmodel，而是下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器码引发的bug">
+<meta property="og:url" content="http://tjcloudwalker.top/2022/11/22/%E6%9C%BA%E5%99%A8%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84bug/index.html">
 <meta property="og:site_name" content="行走就是圆梦，回去亦是前行">
+<meta property="og:description" content="MaixPy系列开发板机器码[教程](获取MaixPy系列开发板机器码——MaixHub 机器码获取 (sipeed.com)) 起初使用教程的机器码下载smodel，运行出现ValueError: [MAIXPY]kpu: load error:2002, ERR_KMODEL_VERSION: only support kmodel V3&#x2F;V4 now错误，其实问题并不在于kmodel，而是下">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-21T16:15:23.000Z">
+<meta property="article:modified_time" content="2022-11-21T16:18:20.961Z">
 <meta property="article:author" content="TJCloudWalker">
 <meta name="twitter:card" content="summary">
 
@@ -26,7 +30,7 @@
 
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="application-name" content="行走就是圆梦，回去亦是前行">
-  <meta name="msapplication-starturl" content="http://tjcloudwalker.top/archives/2022/10/">
+  <meta name="msapplication-starturl" content="http://tjcloudwalker.top/2022/11/22/%E6%9C%BA%E5%99%A8%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84bug/">
   <meta name="msapplication-navbutton-color" content="#9C27B0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="行走就是圆梦，回去亦是前行">
@@ -34,7 +38,7 @@
   <link rel="apple-touch-icon" href="/images/favicon.png">
 
   
-    <link rel="canonical" href="http://tjcloudwalker.top/archives/2022/10/index.html">
+    <link rel="canonical" href="http://tjcloudwalker.top/2022/11/22/%E6%9C%BA%E5%99%A8%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84bug/">
   
 
   
@@ -164,70 +168,98 @@
 </aside>
 
   <main id="main" class="mdui-m-t-5 fadeIn animated">
+  
+<link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
 
-  <div class="mdui-chip mdui-m-b-3">
-    <span class="mdui-chip-icon mdui-color-theme-accent"><i class="mdui-icon material-icons">place</i></span>
-    <span class="mdui-chip-title">归档：2022/10</span>
-  </div>
-
-
-
-
-  <article class="mdui-card mdui-m-b-5 mdui-hoverable">
-    <a href="/2022/10/29/flutter%E5%85%A5%E9%97%A8/">
-      <header class="mdui-card-media mdui-ripple">
-        <img src="/images/random/material-19.png" style="max-height: 240px;">
-        <div class="mdui-card-media-covered">
-          <div class="mdui-card-primary">
-            <div class="mdui-card-primary-title">flutter入门</div>
-            <div class="mdui-card-primary-subtitle"><i class="iconfont">&#xe697;</i> 2022-10-29 / <i class="iconfont">&#xe601;</i> TJCloudWalker</div>
-          </div>
+  <style>#main article .mdui-card-content .center-block{display:block!important;margin-right:auto!important;margin-left:auto!important}</style>
+  <style>#main article .mdui-card-content .text-center{text-align:center!important}</style>
+  <article class="mdui-card mdui-m-b-5">
+    <header class="mdui-card-media">
+      <img src="/images/random/material-6.png" style="max-height: 240px;">
+      <div class="mdui-card-media-covered">
+        <div class="mdui-card-primary">
+          <div class="mdui-card-primary-title">机器码引发的bug</div>
+          <div class="mdui-card-primary-subtitle"><i class="iconfont">&#xe697;</i> 2022-11-22 / <i class="iconfont">&#xe601;</i> TJCloudWalker</div>
         </div>
+      </div>
+      <div class="mdui-card-menu">
         
-      </header>
-    </a>
+          <button class="mdui-btn mdui-btn-icon mdui-text-color-white" mdui-menu="{target: '#qrcode', align: 'right'}"><i class="mdui-icon material-icons">devices</i></button>
+          <ul class="mdui-menu" id="qrcode">
+            
+              <li class="mdui-menu-item"><a class="mdui-text-center mdui-ripple">发送到手机</a></li>
+            
+            <li class="mdui-menu-item" disabled>
+              
+                <img src="//qr.liantu.com/api.php?w=246&m=10&text=http://tjcloudwalker.top/2022/11/22/%E6%9C%BA%E5%99%A8%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84bug/">
+              
+            </li>
+          </ul>
+        
+        
+          <button class="mdui-btn mdui-btn-icon mdui-text-color-white" mdui-menu="{target: '#share_menu', align: 'right'}"><i class="mdui-icon material-icons">share</i></button>
+          <ul class="mdui-menu" id="share_menu">
+            <li class="mdui-menu-item">
+              <a href="https://service.weibo.com/share/share.php?appkey=&title=机器码引发的bug&url=http://tjcloudwalker.top/2022/11/22/%E6%9C%BA%E5%99%A8%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84bug/&pic=http://tjcloudwalker.top/images/favicon.png&searchPic=false&style=simple" target="_blank" class="mdui-ripple">分享到 Weibo</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://twitter.com/intent/tweet?text=机器码引发的bug&url=http://tjcloudwalker.top/2022/11/22/%E6%9C%BA%E5%99%A8%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84bug/&via=TJCloudWalker" target="_blank" class="mdui-ripple">分享到 Twitter</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://www.facebook.com/sharer/sharer.php?u=http://tjcloudwalker.top/2022/11/22/%E6%9C%BA%E5%99%A8%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84bug/" target="_blank" class="mdui-ripple">分享到 Facebook</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://plus.google.com/share?url=http://tjcloudwalker.top/2022/11/22/%E6%9C%BA%E5%99%A8%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84bug/" target="_blank" class="mdui-ripple">分享到 Google+</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://tjcloudwalker.top/2022/11/22/%E6%9C%BA%E5%99%A8%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84bug/&title=机器码引发的bug" target="_blank" class="mdui-ripple">分享到 LinkedIn</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://connect.qq.com/widget/shareqq/index.html?site=行走就是圆梦，回去亦是前行&title=机器码引发的bug&pics=http://tjcloudwalker.top/images/favicon.png&url=http://tjcloudwalker.top/2022/11/22/%E6%9C%BA%E5%99%A8%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84bug/" target="_blank" class="mdui-ripple">分享到 QQ</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://telegram.me/share/url?url=http://tjcloudwalker.top/2022/11/22/%E6%9C%BA%E5%99%A8%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84bug/&text=机器码引发的bug" target="_blank" class="mdui-ripple">分享到 Telegram</a>
+            </li>
+          </ul>
+        
+      </div>
+    </header>
     <div class="mdui-card-content mdui-typo">
+      <h1 id="MaixPy系列开发板机器码"><a href="#MaixPy系列开发板机器码" class="headerlink" title="MaixPy系列开发板机器码"></a>MaixPy系列开发板机器码</h1><p>[教程](<a target="_blank" rel="noopener" href="https://bbs.sipeed.com/thread/426">获取MaixPy系列开发板机器码——MaixHub 机器码获取 (sipeed.com)</a>)</p>
+<p>起初使用教程的机器码下载smodel，运行出现ValueError: [MAIXPY]kpu: load error:2002, ERR_KMODEL_VERSION: only support kmodel V3/V4 now错误，其实问题并不在于kmodel，而是下载用的smodel和板子不对应</p>
+<p>使用自己板子的机器码下载的smodel后成功运行！</p>
+
       
-        ...……
-      
-    </div>
-    <div class="mdui-text-center">
-      <a href="/2022/10/29/flutter%E5%85%A5%E9%97%A8/" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple">阅读全文</a>
+      <blockquote>
+        
+        <strong>本文链接：</strong><br><a href="http://tjcloudwalker.top/2022/11/22/%E6%9C%BA%E5%99%A8%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84bug/">http://tjcloudwalker.top/2022/11/22/机器码引发的bug/</a>
+      </blockquote>
     </div>
     <footer class="mdui-card-actions">
       
-        <a class="mdui-ripple article_categories-link" href="/categories/UI/">UI</a><a class="mdui-ripple article_categories-link" href="/categories/UI/Flutter/">Flutter</a>
-      
       
     </footer>
+    
   </article>
+  
+<script src="//cdn.bootcdn.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
-  <article class="mdui-card mdui-m-b-5 mdui-hoverable">
-    <a href="/2022/10/29/hello-world/">
-      <header class="mdui-card-media mdui-ripple">
-        <img src="/images/random/material-1.png" style="max-height: 240px;">
-        <div class="mdui-card-media-covered">
-          <div class="mdui-card-primary">
-            <div class="mdui-card-primary-title">Hello World</div>
-            <div class="mdui-card-primary-subtitle"><i class="iconfont">&#xe697;</i> 2022-10-29 / <i class="iconfont">&#xe601;</i> TJCloudWalker</div>
-          </div>
-        </div>
-        
-      </header>
-    </a>
-    <div class="mdui-card-content mdui-typo">
-      
-        Welcome to Hexo! This is your very first po...……
-      
-    </div>
-    <div class="mdui-text-center">
-      <a href="/2022/10/29/hello-world/" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple">阅读全文</a>
-    </div>
-    <footer class="mdui-card-actions">
-      
-      
-    </footer>
-  </article>
+  <script>$("#main article .mdui-card-content img.fancybox").on("click",function(e){$.fancybox.open({src:$(this).attr("src")});});</script>
+
+
+  <nav id="paginator">
+    
+    <div class="spacer"></div>
+    
+      <a rel="next" class="extend next" href="/2022/11/15/esp32-cam%E5%85%A5%E9%97%A8/">
+        <span class="mdui-p-x-3" mdui-tooltip="{content: 'esp32-cam入门'}">下一篇</span>
+        <button aria-label="next" class="mdui-btn mdui-btn-raised mdui-btn-icon mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">arrow_forward</i></button>
+      </a>
+    
+  </nav>
+
+
 
 
 
